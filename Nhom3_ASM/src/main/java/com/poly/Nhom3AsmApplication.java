@@ -1,13 +1,13 @@
-package com.poly.demo;
+package com.poly;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AsmJava5Nhom3Application {
+public class Nhom3AsmApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AsmJava5Nhom3Application.class, args);
+		SpringApplication.run(Nhom3AsmApplication.class, args);
 	}
 
 }
