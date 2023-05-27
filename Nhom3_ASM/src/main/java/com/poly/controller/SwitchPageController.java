@@ -51,6 +51,10 @@ public class SwitchPageController {
 	public String Error() {
 		return "404";
 	}
+	@GetMapping("/login")
+	public String Login() {
+		return "login";
+	}
 
 	@ModelAttribute("products")
 	public List<SanPham> getPro() {
