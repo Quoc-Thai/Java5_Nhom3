@@ -40,6 +40,6 @@ public class KhachHang {
 
 	@OneToOne
 	@MapsId
-	@JoinColumn(name = "ma_tk")
+	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
 }

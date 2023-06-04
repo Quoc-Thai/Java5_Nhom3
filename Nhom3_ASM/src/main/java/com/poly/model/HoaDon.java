@@ -36,6 +36,6 @@ public class HoaDon {
 	@OneToMany(mappedBy = "hoaDon")
 	List<HoaDonChiTiet> hoaDonChiTiet;
 	@ManyToOne
-	@JoinColumn(name = "ma_tK")
+	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
 }

@@ -32,6 +32,6 @@ public class GioHang {
 	
 	@OneToOne
 	@MapsId
-	@JoinColumn(name = "ma_tk")
+	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
 }

@@ -22,9 +22,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "taikhoan")
 public class TaiKhoan {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ma_tk")
-	Integer maTK;
 	@Column(name = "username")
 	String username;
 	@Column(name = "password")
