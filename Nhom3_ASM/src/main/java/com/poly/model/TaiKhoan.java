@@ -4,12 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,12 +27,4 @@ public class TaiKhoan {
 
 	@OneToMany(mappedBy = "taiKhoan")
 	List<HoaDon> hoaDon;
-
-	@OneToOne(mappedBy = "taiKhoan")
-	@PrimaryKeyJoinColumn
-	GioHang gioHang;
-
-	@OneToOne(mappedBy = "taiKhoan")
-	@PrimaryKeyJoinColumn
-	KhachHang khachHang;
 }

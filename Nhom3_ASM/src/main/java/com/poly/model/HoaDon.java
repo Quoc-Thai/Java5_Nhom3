@@ -38,4 +38,5 @@ public class HoaDon {
 	@ManyToOne
 	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
+	
 }
