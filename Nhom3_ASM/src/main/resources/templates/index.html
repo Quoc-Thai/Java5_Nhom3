@@ -98,9 +98,25 @@
 				<div class="d-none d-lg-flex ms-2">
 					<a class="btn-sm-square bg-white rounded-circle ms-3" href="">
 						<small class="fa fa-search text-body"></small>
-					</a> <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
+					</a>
+					
+					<div class="nav-item dropdown">
+					<a href="#" data-bs-toggle="dropdown" >
+							<a class="btn-sm-square bg-white rounded-circle ms-3" href="">
 						<small class="fa fa-user text-body"></small>
-					</a> <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
+					</a> 
+							</a>
+							<div class="dropdown-menu m-0">
+							<a th:href="@{/login}" class="dropdown-item">Đăng nhập</a> <a
+								th:href="@{/dangki}" class="dropdown-item">Đăng kí</a> <a
+								th:href="@{/testimonial}" class="dropdown-item">Dây Chuyền</a> <a
+								th:href="@{/404}" class="dropdown-item">Lắc Tai</a>
+						</div>
+					<!--  <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
+						<small class="fa fa-user text-body"></small>
+					</a> -->
+					</div>
+					 <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
 						<small class="fa fa-shopping-bag text-body"></small>
 					</a>
 				</div>

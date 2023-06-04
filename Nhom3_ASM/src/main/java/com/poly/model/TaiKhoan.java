@@ -27,16 +27,9 @@ public class TaiKhoan {
 	@Column(name = "password")
 	String password;
 	@Column(name = "is_admin")
-	Boolean isAdmin;
+	Boolean isAdmin= false;
 
 	@OneToMany(mappedBy = "taiKhoan")
 	List<HoaDon> hoaDon;
 
-	@OneToOne(mappedBy = "taiKhoan")
-	@PrimaryKeyJoinColumn
-	GioHang gioHang;
-
-	@OneToOne(mappedBy = "taiKhoan")
-	@PrimaryKeyJoinColumn
-	KhachHang khachHang;
 }

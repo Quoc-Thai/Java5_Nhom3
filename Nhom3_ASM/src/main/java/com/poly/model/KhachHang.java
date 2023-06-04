@@ -1,6 +1,8 @@
 package com.poly.model;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,14 +34,14 @@ public class KhachHang {
 	@Column(name = "email")
 	String email;
 	@Column(name = "ngay_sinh")
-	Date ngaySinh;
+	String ngaySinh;
 	@Column(name = "dien_thoai")
 	String dienThoai;
 	@Column(name = "dia_chi")
 	String diaChi;
 
 	@OneToOne
-	@MapsId
 	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
+
 }

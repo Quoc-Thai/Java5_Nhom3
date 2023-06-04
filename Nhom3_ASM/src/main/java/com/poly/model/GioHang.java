@@ -31,7 +31,6 @@ public class GioHang {
 	List<GioHangChiTiet> gioHangCT;
 	
 	@OneToOne
-	@MapsId
 	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
 }
