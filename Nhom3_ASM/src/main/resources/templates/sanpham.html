@@ -2,29 +2,43 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Smoke Tests</title>
-    <meta charset="UTF-8">
+<title>Smoke Tests</title>
+<meta charset="UTF-8">
 </head>
 <body>
-<table border="1" style="width:300px">
-    <tr>
-        <td>MaSP</td>
-        <td>Ten</td>
-        <td>GiaSp</td>
-        <td>GiaSale</td>
-        <td>TonKho</td>
-        <td>MoTa</td>
-        <td>HinhAnh</td>
-       <td>ThuongHieu</td>
-        <td>Loai</td>
-         <td>Availibale</td>
-        
-    </tr>
-    <tr th:each="smokeTest : ${smokeTests}">
-        <td>
-           
-        </td>
-    </tr>
-</table>
+	<table border="1" style="width: 300px">
+		<tr>
+			<td>MaSP</td>
+			<td>Ten</td>
+			<td>GiaSp</td>
+			<td>GiaSale</td>
+			<td>TonKho</td>
+			<td>MoTa</td>
+			<td>HinhAnh</td>
+			<td>ThuongHieu</td>
+			<td>Loai</td>
+			<td>Availibale</td>
+			</tr>
+			
+			<table>
+	   <th:block th:each="item : ${items}">
+	      <tr>
+	         <td th:text="${item.ma_sp}">...</td>
+	         <td th:text="${user.name}">...</td>
+	          <td th:text="${user.name}">...</td>
+	          <td th:text="${user.name}">...</td>
+	          <td th:text="${user.name}">...</td>
+	          <td th:text="${user.name}">...</td>
+	          <td th:text="${user.name}">...</td>
+              <td th:text="${user.name}">...</td>
+	          <td th:text="${user.name}">...</td>
+	          <td th:text="${user.name}">...</td>
+	      </tr>
+	      <tr>
+	         <td colspan="2" th:text="${user.address}">...</td>
+	      </tr>
+	   </th:block>
+	</table>
+		</table>
 </body>
 </html>
