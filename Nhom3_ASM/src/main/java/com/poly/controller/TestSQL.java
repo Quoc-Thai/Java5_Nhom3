@@ -1,38 +1,26 @@
 package com.poly.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poly.DAO.KhachHangDAO;
-import com.poly.model.KhachHang;
+import com.poly.DAO.SanPhamDAO;
+import com.poly.model.SanPham;
 
 @Controller
 public class TestSQL {
 	@Autowired
 	SanPhamDAO spdao;
 
-
-	
-	@GetMapping("sp")
-	public String sp() {
-		return "sanpham";
-		
-	}
-	
-	
-	@RequestMapping("sp")
+	@GetMapping("/sp")
 	public String index(Model model) {
-		SanPham item = new SanPham();
-		model.addAttribute("item", item);
-		List<SanPham> items = spdao.findAll();
+		var items = spdao.findAll();
+		for (SanPham sanPham : items) {
+			System.out.println(sanPham.getGiaSP());
+		}
 		model.addAttribute("items", items);
 		return "sanpham";
-
 	}
-	
 }

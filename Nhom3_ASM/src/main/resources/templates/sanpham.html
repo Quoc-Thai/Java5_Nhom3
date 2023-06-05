@@ -18,27 +18,11 @@
 			<td>ThuongHieu</td>
 			<td>Loai</td>
 			<td>Availibale</td>
-			</tr>
-			
-			<table>
-	   <th:block th:each="item : ${items}">
-	      <tr>
-	         <td th:text="${item.ma_sp}">...</td>
-	         <td th:text="${user.name}">...</td>
-	          <td th:text="${user.name}">...</td>
-	          <td th:text="${user.name}">...</td>
-	          <td th:text="${user.name}">...</td>
-	          <td th:text="${user.name}">...</td>
-	          <td th:text="${user.name}">...</td>
-              <td th:text="${user.name}">...</td>
-	          <td th:text="${user.name}">...</td>
-	          <td th:text="${user.name}">...</td>
-	      </tr>
-	      <tr>
-	         <td colspan="2" th:text="${user.address}">...</td>
-	      </tr>
-	   </th:block>
+		</tr>
+		<tr th:each="item : ${items}" th:field="*{item}">
+			<td th:text="${item.getMaSP}"></td>
+			<td th:text="${item.getGiaSP}"></td>
+		</tr>
 	</table>
-		</table>
 </body>
 </html>
