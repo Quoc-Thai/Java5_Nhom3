@@ -6,21 +6,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poly.DAO.SanPhamDAO;
-import com.poly.model.SanPham;
+import com.poly.DAO.KhachHangDAO;
+import com.poly.model.KhachHang;
 
 @Controller
 public class TestSQL {
 	@Autowired
-	SanPhamDAO sanPhamDAO;
+	KhachHangDAO khachHangDAO;
 
 	@ResponseBody
 	@GetMapping("/sanpham")
 	public String index(Model model) {
-		var sanphams = sanPhamDAO.findAll();
-		for (SanPham sanPham : sanphams) {
-			var products = sanPham.getThuongHieu();
-			System.out.println(products.getTenTH());
+		var sanphams = khachHangDAO.findAll();
+		for (KhachHang sanPham : sanphams) {
+			var products = sanPham.getTaiKhoan();
+			System.out.println(products.getUsername());
 		}
 		return null;
 	}
