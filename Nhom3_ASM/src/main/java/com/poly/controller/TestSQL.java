@@ -8,13 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.poly.DAO.SanPhamDAO;
-import com.poly.model.SanPham;
+import com.poly.DAO.KhachHangDAO;
+import com.poly.model.KhachHang;
 
 @Controller
 public class TestSQL {
 	@Autowired
 	SanPhamDAO spdao;
+
 
 	
 	@GetMapping("sp")
@@ -31,6 +32,7 @@ public class TestSQL {
 		List<SanPham> items = spdao.findAll();
 		model.addAttribute("items", items);
 		return "sanpham";
+
 	}
 	
 }
