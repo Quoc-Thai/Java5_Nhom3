@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: header}"></head>
+<link rel="stylesheet" href="/css/login.css">
+<body>
+	<!-- Spinner Start -->
+	<div th:replace="~{fragments :: spinner}"></div>
+	<!-- Spinner End -->
+
+	<!-- Navbar Start -->
+	<div th:replace="~{fragments :: navbar}"></div>
+	<!-- Navbar End -->
+
+	<!-- About Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="row g-5 align-items-center">
+				<div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+					<div class="about-img position-relative overflow-hidden p-5 pe-0">
+						<img class="img-fluid w-100" src="img/banner1.jpg">
+					</div>
+				</div>
+				<div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+					<h1 class="display-5 mb-4">TTC-Mang Đến Cho Bạn Muôn Vàn Lựa Chọn</h1>
+					<p class="mb-4">TTC được thành lập ngày 09-05-2023 với mong muốn:</p>
+					<p>
+						<i class="fa fa-check text-primary me-3"></i>Giúp bạn chọn trang sức cho riêng mình
+					</p>
+					<p>
+						<i class="fa fa-check text-primary me-3"></i>Luôn cập nhật xu hướng
+					</p>
+					<p>
+						<i class="fa fa-check text-primary me-3"></i>Dễ dàng mua sắm
+					</p>
+					<a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="">Thử ngay</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- About End -->
+
+	<!-- Footer Start -->
+	<div th:replace="~{fragments :: footer}"></div>
+	<!-- Footer End -->
+
+
+	<!-- Back to Top -->
+	<a th:replace="~{fragments :: backToTop}"></a>
+
+
+	<!-- JavaScript Libraries -->
+	<div th:replace="~{fragments :: javascript}"></div>
+	<!-- Template Javascript -->
+
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
+</body>
+
+</html>
