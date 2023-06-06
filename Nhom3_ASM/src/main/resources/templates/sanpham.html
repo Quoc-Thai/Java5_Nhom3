@@ -19,7 +19,7 @@
 			<td>Loai</td>
 			<td>Availibale</td>
 		</tr>
-		<tr th:each="item : ${items}" th:field="*{item}">
+		<tr th:each="item : ${items}">
 			<td th:text="${item.getMaSP}"></td>
 			<td th:text="${item.getGiaSP}"></td>
 		</tr>
