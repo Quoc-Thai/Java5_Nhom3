@@ -1,27 +1,28 @@
 package com.poly.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poly.DAO.KhachHangDAO;
-import com.poly.model.KhachHang;
+import com.poly.DAO.SanPhamDAO;
+import com.poly.model.SanPham;
 
 @Controller
 public class TestSQL {
 	@Autowired
-	KhachHangDAO khachHangDAO;
+	SanPhamDAO sanPhamDAO;
 
-	@ResponseBody
 	@GetMapping("/sanpham")
 	public String index(Model model) {
-		var sanphams = khachHangDAO.findAll();
-		for (KhachHang sanPham : sanphams) {
-			var products = sanPham.getTaiKhoan();
-			System.out.println(products.getUsername());
+		List<SanPham> sanphams = sanPhamDAO.findAll();
+		for (SanPham sanPham : sanphams) {
+			var products = sanPham.getAvailable();
+			System.out.println(products);
 		}
-		return null;
+		model.addAttribute("items", sanphams);
+		return "sanpham";
 	}
 }
