@@ -26,7 +26,7 @@ public class TaiKhoan {
 	@Column(name = "password")
 	String password;
 	@Column(name = "is_admin")
-	Boolean isAdmin = false;
+	Boolean isAdmin= false;
 
 	@OneToMany(mappedBy = "taiKhoan")
 	List<HoaDon> hoaDon;
