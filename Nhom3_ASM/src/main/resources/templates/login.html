@@ -4,21 +4,22 @@
 <head th:replace="~{fragments :: header}"></head>
 <link rel="stylesheet" href="/css/login.css">
 <body>
-	<!-- Spinner Start -->
-	<div th:replace="~{fragments :: spinner}"></div>
-	<!-- Spinner End -->
 
 	<!-- Navbar Start -->
 	<div th:replace="~{fragments :: navbar}"></div>
 	<!-- Navbar End -->
 
-	<form th:action="@{/login/submit}" class="login" method="post">
+	<form th:object="${account}" th:action="@{/login/submit}" class="login"
+		method="post">
 		<h2>Sign In</h2>
-		<input type="text" class="input-text" name="username"
-			placeholder="Username"> <input type="password"
-			class="input-text" name="password" placeholder="Password"> <input
-			type="checkbox" name="remember" value="true"> Remember me? <br>
-			<h4 th:text="${message}"></h4>
+		<input type="text" class="input-text" name="username" th:field="*{username}"
+			placeholder="Username">
+			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+		<input type="password" th:field="*{password}"
+			class="input-text" name="password" placeholder="Password">
+			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+		<input type="checkbox" name="remember" value="true"> Remember me? <br>
+		<h4 th:text="${message}"></h4>
 		<button>Login</button>
 	</form>
 

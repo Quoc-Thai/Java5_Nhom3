@@ -10,8 +10,8 @@ public class SessionService {
 	@Autowired
 	HttpSession session;
 
-	public void set(String name, Object vale) {
-		session.setAttribute(name, vale);
+	public void set(String name, Object value) {
+		session.setAttribute(name, value);
 	}
 
 	@SuppressWarnings("unchecked")

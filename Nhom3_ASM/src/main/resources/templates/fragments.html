@@ -92,6 +92,7 @@
 						</div>
 					</div>
 					<a th:href="@{/contact}" class="nav-item nav-link">Liên Hệ</a>
+					<a th:if="${session.containsKey('currentUser')}" th:text="${session.currentUser}" class="nav-item nav-link">${session.currentUser}</a>
 				</div>
 				<div class="d-none d-lg-flex ms-2">
 					<a class="btn-sm-square bg-white rounded-circle ms-3" href="">
