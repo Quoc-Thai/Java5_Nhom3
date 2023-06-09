@@ -3,17 +3,33 @@ package com.poly.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.poly.model.SanPham;
+import com.poly.service.SessionService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
-	
+	@Autowired
+	HttpServletRequest request;
+	@Autowired
+	HttpSession session;
+	@Autowired
+	SessionService sessionService;
+
 	@GetMapping("/index")
-	public String login() {
+	public String login(Model model, @CookieValue(name = "rememberUser", defaultValue = "") String cookie) {
+		if (!cookie.isEmpty()) {
+			sessionService.set("currentUser", cookie);
+		}
 		return "index";
 	}
 
