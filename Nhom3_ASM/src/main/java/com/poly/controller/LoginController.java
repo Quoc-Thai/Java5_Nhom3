@@ -23,7 +23,6 @@ public class LoginController {
 	public String display() {
 		return "login";
 	}
-
 	@PostMapping("/login/submit")
 	public String submit(Model model, @RequestParam("username") String username,
 			@RequestParam("password") String password) {
@@ -34,6 +33,6 @@ public class LoginController {
 			}
 		}
 		model.addAttribute("message", "Tài khoản hoặc mật khẩu không đúng");
-		return "redirect:/login";
+		return "redirect:/dangnhap";
 	}
 }

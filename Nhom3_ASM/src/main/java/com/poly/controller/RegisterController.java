@@ -14,7 +14,7 @@ import com.poly.model.KhachHang;
 import com.poly.model.TaiKhoan;
 
 @Controller
-public class DangKiController {
+public class RegisterController {
 	@Autowired
 	TaiKhoanDAO dao;
 	
@@ -23,7 +23,7 @@ public class DangKiController {
 	
 	@GetMapping("/dangki")
 	public String dangki() {
-		return "dangki";
+		return "register";
 	}
 	
 	@PostMapping("/dangki/submit")
@@ -42,12 +42,10 @@ public class DangKiController {
 		kh.setHoKH(ho);
 		kh.setTenKH(ten);
 		kh.setNgaySinh(ngaysinh);
-
 		kh.setTaiKhoan(tk);
 		
 		dao.save(tk);
 		khdao.save(kh);
-		
 		
 		return "redirect:/index";
 		
