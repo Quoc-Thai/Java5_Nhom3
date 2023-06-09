@@ -8,18 +8,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poly.DAO.GioHangDAO;
 import com.poly.DAO.KhachHangDAO;
 import com.poly.DAO.TaiKhoanDAO;
+import com.poly.model.GioHang;
 import com.poly.model.KhachHang;
 import com.poly.model.TaiKhoan;
 
 @Controller
 public class RegisterController {
 	@Autowired
-	TaiKhoanDAO dao;
+	TaiKhoanDAO taiKhoanDAO;
 	
 	@Autowired
-	KhachHangDAO khdao;
+	KhachHangDAO khachHangDAO;
+	
+	@Autowired 
+	GioHangDAO gioHangDAO;
 	
 	@GetMapping("/dangki")
 	public String dangki() {
@@ -33,6 +38,8 @@ public class RegisterController {
 			@RequestParam("email") String email) {
 		TaiKhoan tk = new TaiKhoan();
 		KhachHang kh = new KhachHang();
+		GioHang gh = new GioHang();
+	
 		tk.setUsername(username);
 		tk.setPassword(password);
 		
@@ -44,9 +51,12 @@ public class RegisterController {
 		kh.setNgaySinh(ngaysinh);
 		kh.setTaiKhoan(tk);
 		
-		dao.save(tk);
-		khdao.save(kh);
+		gh.setTaiKhoan(tk);
 		
+		
+		taiKhoanDAO.save(tk);
+		khachHangDAO.save(kh);
+		gioHangDAO.save(gh);
 		return "redirect:/index";
 		
 	}
