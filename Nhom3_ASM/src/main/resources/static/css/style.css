@@ -158,7 +158,7 @@
     justify-content: center;
     text-align: start;
     z-index: 1;
-    color: #16A085;
+    color: rgb(0, 64, 128);
 	font-weight: bold;
 	}
 
@@ -171,8 +171,8 @@
 .carousel-control-next-icon {
     width: 3rem;
     height: 3rem;
-    background-color: black;
-    border: 10px solid white;
+    background-color: #768abc;
+    border: 10px solid #768abc;
     border-radius: 3rem;
 }
 

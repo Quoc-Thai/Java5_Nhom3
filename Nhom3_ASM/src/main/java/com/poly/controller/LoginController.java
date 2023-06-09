@@ -41,7 +41,6 @@ public class LoginController {
 		}
 		return "login";
 	}
-
 	@PostMapping("/login/submit")
 	public String submit(Model model, @Valid @ModelAttribute("account") TaiKhoan account, BindingResult result,
 			@RequestParam("username") String username, @RequestParam("password") String password) {
@@ -62,6 +61,6 @@ public class LoginController {
 			}
 		}
 		model.addAttribute("message", "Tài khoản hoặc mật khẩu không đúng");
-		return "redirect:/login";
+		return "redirect:/dangnhap";
 	}
 }
