@@ -22,6 +22,8 @@ public class HoaDonChiTiet {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ma_hdct")
 	Integer maHDCT;
+	@Column(name = "gia_sp")
+	Integer giaSP;
 	@Column(name = "so_luong")
 	Integer soLuong;
 	@Column(name = "tong_tien")

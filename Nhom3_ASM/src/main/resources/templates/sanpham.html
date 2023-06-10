@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -21,7 +20,15 @@
 		</tr>
 		<tr th:each="item : ${items}">
 			<td th:text="${item.getMaSP}"></td>
+			<td th:text="${item.getTenSP}"></td>
 			<td th:text="${item.getGiaSP}"></td>
+			<td th:text="${item.getGiaSale}"></td>
+			<td th:text="${item.getTonKho}"></td>
+			<td th:text="${item.getMota}"></td>
+			<td><img alt="" th:src="${item.getHinhAnh}"></td>
+			<td th:text="${item.getThuongHieu.getTenTH}"></td>
+			<td th:text="${item.getLoaiHang.getTenLoai}"></td>
+			<td th:text="${item.getAvailable}"></td>
 		</tr>
 	</table>
 </body>
