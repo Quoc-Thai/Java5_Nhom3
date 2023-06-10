@@ -77,10 +77,9 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<div class="navbar-nav ms-auto p-4 p-lg-0">
-					<a th:href="@{/index}" class="nav-item nav-link active">Trang Chủ</a>
-					 <a th:href="@{/about}" class="nav-item nav-link">Thông
-						Tin</a> 
-						<a th:href="@{/product}" class="nav-item nav-link">Sản Phẩm</a>
+					<a th:href="@{/index}" class="nav-item nav-link active">Trang
+						Chủ</a> <a th:href="@{/about}" class="nav-item nav-link">Thông Tin</a>
+					<a th:href="@{/product}" class="nav-item nav-link">Sản Phẩm</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown">Loại</a>
@@ -92,23 +91,29 @@
 						</div>
 					</div>
 					<a th:href="@{/contact}" class="nav-item nav-link">Liên Hệ</a>
-					<a th:if="${session.containsKey('currentUser')}" th:text="${session.currentUser}" class="nav-item nav-link">${session.currentUser}</a>
 				</div>
 				<div class="d-none d-lg-flex ms-2">
 					<a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-						<small class="fa fa-search text-body"></small></a>
-						
-							<div class="nav-item dropdown">
-						 <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-						<small class="fa fa-user text-body"></small></a>
+						<small class="fa fa-search text-body"></small>
+					</a>
+
+					<div class="nav-item dropdown">
+						<a class="btn-sm-square bg-white rounded-circle ms-3" href="">
+							<small class="fa fa-user text-body"></small>
+						</a>
 						<div class="dropdown-menu m-0">
-							<a th:href="@{/login}" class="dropdown-item">Đăng nhập</a> <a
-								th:href="@{/dangki}" class="dropdown-item">Đăng kí</a> <a
-								th:href="@{/testimonial}" class="dropdown-item">Quên mật khẩu</a> <a
-								th:href="@{/404}" class="dropdown-item">Đổi mật khẩu</a>
+							<a th:if="${session.currentUser} == null" th:href="@{/login}"
+								class="dropdown-item">Đăng nhập</a> <a
+								th:if="${session.currentUser} == null" th:href="@{/dangki}"
+								class="dropdown-item">Đăng kí</a> <a th:href="@{/testimonial}"
+								th:if="${session.currentUser}" class="dropdown-item">Quên
+								mật khẩu</a> <a th:href="@{/404}" th:if="${session.currentUser}"
+								class="dropdown-item">Đổi mật khẩu</a> </a> <a
+								th:if="${session.currentUser}" th:href="@{/logout}"
+								class="dropdown-item">Đăng xuất</a>
 						</div>
 					</div>
-					
+
 					</a> <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
 						<small class="fa fa-shopping-bag text-body"></small>
 					</a>
@@ -201,7 +206,7 @@
 				<h4 class="text-light mb-4">Địa chỉ</h4>
 				<p>
 					<i class="fa fa-map-marker-alt me-3"></i>Toà nhà FPT Polytechnic,
-							Đ. Số 22, Thường Thạnh, Cái Răng, Cần Thơ 900000, Việt Nam
+					Đ. Số 22, Thường Thạnh, Cái Răng, Cần Thơ 900000, Việt Nam
 				</p>
 				<p>
 					<i class="fa fa-phone-alt me-3"></i>+84 333 820 589
@@ -243,7 +248,8 @@
 <!-- Footer End -->
 
 <!-- Firm Visit Start -->
-<div th:fragment="firm" class="container-fluid bg-secondary bg-icon mt-5 py-6">
+<div th:fragment="firm"
+	class="container-fluid bg-secondary bg-icon mt-5 py-6">
 	<div class="container">
 		<div class="row g-5 align-items-center">
 			<div class="col-md-7 wow fadeIn" data-wow-delay="0.1s">
@@ -262,6 +268,45 @@
 	</div>
 </div>
 <!-- Firm Visit End -->
+
+<!-- Load Product -->
+
+<div th:fragment="product" class="row g-4">
+	<div class="col-xl-3 col-lg-4 col-md-6"
+		data-wow-delay="0.1s" th:each="product : ${category.sanPham}" th:if="${product.getAvailable} == True">
+		<div class="product-item">
+			<div class="position-relative bg-light overflow-hidden">
+				<img class="img-fluid w-100" th:src="${product.getHinhAnh()}" alt="">
+				<div
+					class="bg-secondary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">New</div>
+			</div>
+			<div class="text-center p-4">
+				<a class="d-block h5 mb-2"
+					th:href="@{/product/{id}(id=${product.getMaSP()})}"
+					th:text="${product.getTenSP()}"></a> <span
+					class="text-primary me-1" th:text="${product.getGiaSale()}"></span>
+				<span class="text-body text-decoration-line-through"
+					th:text="${product.getGiaSP()}"></span>
+			</div>
+			<div class="d-flex border-top">
+				<small class="w-50 text-center border-end py-2"> <a
+					class="text-body" href=""><i
+						class="fa fa-eye text-primary me-2"></i>Xem Chi Tiết</a>
+				</small> <small class="w-50 text-center py-2"> <a class="text-body"
+					href=""><i class="fa fa-shopping-bag text-primary me-2"></i>Thêm
+						Vào Giỏ Hàng</a>
+				</small>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+		<a class="btn btn-primary rounded-pill py-3 px-5"
+			th:href="@{/category/{id}(id=${category.getMaLoai})}">Xem Thêm</a>
+	</div>
+</div>
+
+
+
 
 <!-- Back to Top -->
 <a th:fragment="backToTop" href="#"

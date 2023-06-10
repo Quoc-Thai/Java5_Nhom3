@@ -1,7 +1,5 @@
 package com.poly.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +28,9 @@ public class RegisterController {
 	public String dangki() {
 		return "register";
 	}
-	
+
 	@PostMapping("/dangki/submit")
-	public String submit(@RequestParam("username") String username,@RequestParam("password") String password,
+	public String submit(@RequestParam("username") String username, @RequestParam("password") String password,
 			@RequestParam("ngaysinh") String ngaysinh, @RequestParam("ho") String ho, @RequestParam("ten") String ten,
 			@RequestParam("diachi") String diachi, @RequestParam("dienthoai") String dienthoai,
 			@RequestParam("email") String email) {
@@ -42,7 +40,7 @@ public class RegisterController {
 	
 		tk.setUsername(username);
 		tk.setPassword(password);
-		
+
 		kh.setDiaChi(diachi);
 		kh.setDienThoai(dienthoai);
 		kh.setEmail(email);
@@ -50,14 +48,11 @@ public class RegisterController {
 		kh.setTenKH(ten);
 		kh.setNgaySinh(ngaysinh);
 		kh.setTaiKhoan(tk);
-		
 		gh.setTaiKhoan(tk);
-		
-		
 		taiKhoanDAO.save(tk);
 		khachHangDAO.save(kh);
 		gioHangDAO.save(gh);
 		return "redirect:/index";
-		
+
 	}
 }
