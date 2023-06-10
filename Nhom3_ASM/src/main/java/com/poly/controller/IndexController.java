@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.poly.DAO.SanPhamDAO;
 import com.poly.model.SanPham;
+import com.poly.service.CookieService;
 import com.poly.service.SessionService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,13 +26,25 @@ public class IndexController {
 	HttpSession session;
 	@Autowired
 	SessionService sessionService;
+	@Autowired
+	CookieService cookieService;
+	@Autowired
+	SanPhamDAO sanPhamDAO;
 
 	@GetMapping("/index")
-	public String login(Model model, @CookieValue(name = "rememberUser", defaultValue = "") String cookie) {
-		if (!cookie.isEmpty()) {
+	public String login(Model model,
+			@CookieValue(name = "rememberUser", defaultValue = "", required = false) String cookie) {
+		if (!cookie.isBlank()) {
 			sessionService.set("currentUser", cookie);
 		}
 		return "index";
+	}
+
+	@GetMapping("/logout")
+	public String logout() {
+		cookieService.removeCookie("rememberUser");
+		session.removeAttribute("currentUser");
+		return "redirect:/index";
 	}
 
 	@ModelAttribute("productsA")

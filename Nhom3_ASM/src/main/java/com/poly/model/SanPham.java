@@ -24,7 +24,7 @@ public class SanPham {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ma_sp")
-	String maSP;
+	Integer maSP;
 	@Column(name = "ten_sp")
 	String tenSP;
 	@Column(name = "gia_sp")
@@ -38,7 +38,7 @@ public class SanPham {
 	@Column(name = "hinh_anh")
 	String hinhAnh;
 	@Column(name = "available")
-	String available;
+	Boolean available;
 
 	@OneToMany(mappedBy = "sanPham")
 	List<GioHangChiTiet> gioHangChiTiet;
