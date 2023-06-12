@@ -103,13 +103,16 @@
 						</a>
 						<div class="dropdown-menu m-0">
 							<a th:if="${session.currentUser} == null" th:href="@{/login}"
-								class="dropdown-item">Đăng nhập</a> <a
-								th:if="${session.currentUser} == null" th:href="@{/dangki}"
-								class="dropdown-item">Đăng kí</a> <a th:href="@{/testimonial}"
-								th:if="${session.currentUser}" class="dropdown-item">Quên
-								mật khẩu</a> <a th:href="@{/404}" th:if="${session.currentUser}"
-								class="dropdown-item">Đổi mật khẩu</a> </a> <a
-								th:if="${session.currentUser}" th:href="@{/logout}"
+								class="dropdown-item">Đăng nhập</a> 
+								<a th:if="${session.currentUser} == null" th:href="@{/dangki}"
+								class="dropdown-item">Đăng kí</a>
+								 <a th:href="@{/testimonial}" th:if="${session.currentUser}" class="dropdown-item">Quên
+								mật khẩu</a> 
+								<a th:href="@{/changePassword}" th:if="${session.currentUser}"
+								class="dropdown-item">Đổi mật khẩu</a>
+								 <a th:href="@{/thongtin}" th:if="${session.currentUser}"
+								class="dropdown-item">Thông tin khách hàng</a>
+							<a	th:if="${session.currentUser}" th:href="@{/logout}"
 								class="dropdown-item">Đăng xuất</a>
 						</div>
 					</div>
