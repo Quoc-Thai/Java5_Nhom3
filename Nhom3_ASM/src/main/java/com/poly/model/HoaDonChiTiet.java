@@ -23,7 +23,7 @@ public class HoaDonChiTiet {
 	@Column(name = "ma_hdct")
 	Integer maHDCT;
 	@Column(name = "gia_sp")
-	Integer giaSP;
+	Double giaSP;
 	@Column(name = "so_luong")
 	Integer soLuong;
 	@Column(name = "tong_tien")

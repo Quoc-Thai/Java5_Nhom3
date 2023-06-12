@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,9 +34,5 @@ public class KhachHang {
 	String dienThoai;
 	@Column(name = "dia_chi")
 	String diaChi;
-
-	@OneToOne
-	@JoinColumn(name = "username")
-	TaiKhoan taiKhoan;
 
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,12 +32,7 @@ public class LoginController {
 	ParamService paramService;
 
 	@GetMapping("/login")
-	public String display(@ModelAttribute("account") TaiKhoan account,
-			@CookieValue(name = "rememberUser", defaultValue = "") String cookie) {
-		if (!cookie.isEmpty()) {
-			sessionService.set("currentUser", cookie);
-			return "redirect:/index";
-		}
+	public String display() {
 		return "login";
 	}
 	@PostMapping("/login/submit")
@@ -51,7 +45,8 @@ public class LoginController {
 		var taikhoan = taiKhoanDAO.findAll();
 		for (TaiKhoan tk : taikhoan) {
 			if (tk.getUsername().equals(username) && tk.getPassword().equals(password)) {
-				sessionService.set("currentUser", username);
+				TaiKhoan acc = new TaiKhoan(username, password, rm, null, null);
+				sessionService.set("currentUser", acc);
 				if (rm.equals(true)) {
 					cookieService.addCookie("rememberUser", username, 10);
 				} else {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: header}"></head>
+<link href="/css/receiptList.css" rel="stylesheet">
+<body>
+	<!-- Navbar Start -->
+	<div th:replace="~{fragments :: navbar}"></div>
+	<!-- Navbar End -->
+	<section class="intro" style="margin-top: 150px">
+		<div class="bg-image h-200" style="background-color: #f5f7fa;">
+			<div class="mask d-flex align-items-center h-100">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body p-0">
+									<div class="table-responsive table-scroll"
+										data-mdb-perfect-scrollbar="true"
+										style="position: relative; max-height: 500px">
+										<form action="">
+											<table class="table table-striped mb-0">
+												<thead style="background-color: #002d72;">
+													<tr>
+														<th scope="col">Mã hóa đơn</th>
+														<th scope="col">Tổng sản phẩm</th>
+														<th scope="col">Tổng Tiền</th>
+														<th scope="col">Ngày tạo</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="receipt : ${receiptList}">
+														<td th:text="${receipt.maHD}"></td>
+														<td th:text="${receipt.tongSP}"></td>
+														<td th:text="${receipt.tongTien}"></td>
+														<td th:text="${receipt.ngayTao}"></td>
+														<td>
+															<button class="bi bi-pencil-square"
+																th:formaction="@{/account/receipt/{id}(id=${receipt.maHD})}"
+																style="margin-right: 30px"></button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
