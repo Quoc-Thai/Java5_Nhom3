@@ -24,8 +24,6 @@ public class GioHangChiTiet {
 	Integer maGHCT;
 	@Column(name = "so_luong")
 	Integer soLuong;
-	@Column(name = "tong_tien")
-	Double tongTien;
 
 	@ManyToOne
 	@JoinColumn(name = "ma_sp")

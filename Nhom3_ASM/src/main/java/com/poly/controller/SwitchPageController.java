@@ -41,4 +41,9 @@ public class SwitchPageController {
 	public String Error() {
 		return "404";
 	}
+	@GetMapping("/dangnhap")
+	public String Dangnhap() {
+		return "dangnhap";
+	}
+	
 }

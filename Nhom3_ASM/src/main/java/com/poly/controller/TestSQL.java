@@ -17,7 +17,7 @@ public class TestSQL {
 
 	@GetMapping("/sanpham")
 	public String index(Model model) {
-		List<SanPham> sanphams = sanPhamDAO.findAll();
+		List<SanPham> sanphams = sanPhamDAO.getSanPhamByCategoryId(4);
 		for (SanPham sanPham : sanphams) {
 			var products = sanPham.getAvailable();
 			System.out.println(products);
