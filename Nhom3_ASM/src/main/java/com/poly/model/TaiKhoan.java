@@ -24,6 +24,7 @@ public class TaiKhoan {
 	@Column(name = "username")
 	@NotBlank(message = "Username không được bỏ trống")
 	String username;
+	
 	@NotBlank(message = "Mật khẩu không được bỏ trống")
 	@Column(name = "password")
 	String password;

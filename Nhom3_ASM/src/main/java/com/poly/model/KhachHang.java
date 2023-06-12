@@ -34,5 +34,4 @@ public class KhachHang {
 	String dienThoai;
 	@Column(name = "dia_chi")
 	String diaChi;
-
 }

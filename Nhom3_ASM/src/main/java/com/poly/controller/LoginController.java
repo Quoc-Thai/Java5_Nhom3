@@ -7,6 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poly.DAO.TaiKhoanDAO;
@@ -22,6 +24,7 @@ import jakarta.validation.Valid;
 public class LoginController {
 	@Autowired
 	TaiKhoanDAO taiKhoanDAO;
+	
 	@Autowired
 	HttpServletRequest request;
 	@Autowired
@@ -30,7 +33,8 @@ public class LoginController {
 	SessionService sessionService;
 	@Autowired
 	ParamService paramService;
-
+	
+	String name;
 	@GetMapping("/login")
 	public String display() {
 		return "login";
@@ -56,6 +60,43 @@ public class LoginController {
 			}
 		}
 		model.addAttribute("message", "Tài khoản hoặc mật khẩu không đúng");
-		return "redirect:/dangnhap";
+		return "login";
+	}
+	/////////////////////////////////////////////////////////////////////////////
+	@GetMapping("/changePassword")
+	public String form() {
+		return "changePassword";
+	}
+	@PostMapping("/changePassword/submit")
+		public String DoiMatKhau(Model model, @RequestParam("passOld") String passOld,
+				@RequestParam("passNew") String passNew, @RequestParam("passNew1") String passNew1) {
+		var taikhoan = taiKhoanDAO.findAll();
+		TaiKhoan tkUpdate = new TaiKhoan();
+		for(TaiKhoan tk : taikhoan) {
+			if(tk.getPassword().equals(passOld) && passNew.equals(passNew1) ) {
+			/////update
+				tkUpdate.setPassword(passNew1);
+				tkUpdate.setUsername(name);
+				taiKhoanDAO.save(tkUpdate);
+				return "redirect:/index" ;
+			}
+			else {
+				return "redirect:/changePassword";
+			}
+		}
+		return "changePassword";
+	}
+	
+/////////////////////////////////////////////////////////////////////////////
+	@GetMapping("/thongtin")
+	public String thongTin() {
+		return "info";
+	}
+	@PostMapping("thongtin/submit")
+	public String showThongtin(Model model) {
+		var taikhoan = taiKhoanDAO.findAll();
+		
+		
+		return "info";
 	}
 }
