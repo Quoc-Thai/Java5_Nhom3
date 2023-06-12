@@ -110,8 +110,9 @@
 								mật khẩu</a> 
 								<a th:href="@{/changePassword}" th:if="${session.currentUser}"
 								class="dropdown-item">Đổi mật khẩu</a>
-								 <a
-								th:if="${session.currentUser}" th:href="@{/logout}"
+								 <a th:href="@{/thongtin}" th:if="${session.currentUser}"
+								class="dropdown-item">Thông tin khách hàng</a>
+							<a	th:if="${session.currentUser}" th:href="@{/logout}"
 								class="dropdown-item">Đăng xuất</a>
 						</div>
 					</div>

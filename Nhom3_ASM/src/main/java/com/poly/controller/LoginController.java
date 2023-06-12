@@ -66,7 +66,7 @@ public class LoginController {
 			}
 		}
 		model.addAttribute("message", "Tài khoản hoặc mật khẩu không đúng");
-		return "redirect:/dangnhap";
+		return "login";
 	}
 	/////////////////////////////////////////////////////////////////////////////
 	@GetMapping("/changePassword")
@@ -90,7 +90,19 @@ public class LoginController {
 				return "redirect:/changePassword";
 			}
 		}
-		return "redirect:/changePassword";
-
+		return "changePassword";
+	}
+	
+/////////////////////////////////////////////////////////////////////////////
+	@GetMapping("/thongtin")
+	public String thongTin() {
+		return "info";
+	}
+	@PostMapping("thongtin/submit")
+	public String showThongtin(Model model) {
+		var taikhoan = taiKhoanDAO.findAll();
+		
+		
+		return "info";
 	}
 }

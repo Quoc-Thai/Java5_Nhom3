@@ -13,20 +13,26 @@
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng nhập</h3>
-            <form  th:action="@{/login/submit}" class="login" method="post">
+            <form  th:action="@{/login/submit}" class="login" method="post" th:object="${account}">
+             
+             
               <div class="row">
                 <div class="col-md-12 mb-4">
                   <div class="form-outline">
-                    <input type="text" name="username" class="form-control form-control-lg" 
-                    placeholder="username"/>
+            
+            <p> <input type="text" class="form-control form-control-lg" name="username" 
+           placeholder="Username">
+		 <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                    
                   </div>
                 </div>
                   </div>
                    <div class="row">
-                <div class="col-md-12 mb-4">
-                  <div class="form-outline">
-                    <input type="password" name="password" class="form-control form-control-lg" 
-                    placeholder="password"/>
+                	<div class="col-md-12 mb-4">
+                 	 <div class="form-outline">
+           <p>  <input type="password" class="form-control form-control-lg" 
+             name="password" placeholder="Password"></p>
+				 <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                   </div>
                 </div>
             </div>
@@ -35,6 +41,7 @@
                   <div class="form-outline">
                    	 <input
 			type="checkbox" name="remember" value="true"> Remember me? <br>
+			<p class="alert alert-warning" th:text="${message}"></p>
                   </div>
                 </div>
             </div>

@@ -37,6 +37,7 @@ public class KhachHang {
 	@Column(name = "dia_chi")
 	String diaChi;
 
+	
 	@OneToOne
 	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
