@@ -91,12 +91,13 @@
 							<a th:if="${session.currentUser} == null" th:href="@{/login}"
 								class="dropdown-item">Đăng nhập</a> <a
 								th:if="${session.currentUser} == null" th:href="@{/dangki}"
-								class="dropdown-item">Đăng kí</a> <a th:href="@{/account/receipt}"
+								class="dropdown-item">Đăng kí</a><a th:href="@{/testimonial}"
+								th:if="${session.currentUser} == null" class="dropdown-item">Quên
+								mật khẩu</a> <a th:href="@{/account/receipt}"
 								th:if="${session.currentUser}" class="dropdown-item">Hóa Đơn</a>
-							<a th:href="@{/testimonial}" th:if="${session.currentUser}"
-								class="dropdown-item">Quên mật khẩu</a> <a th:href="@{/404}"
-								th:if="${session.currentUser}" class="dropdown-item">Đổi mật
-								khẩu</a> </a> <a th:if="${session.currentUser}" th:href="@{/logout}"
+							<a th:href="@{/404}" th:if="${session.currentUser}"
+								class="dropdown-item">Đổi mật khẩu</a> </a> <a
+								th:if="${session.currentUser}" th:href="@{/logout}"
 								class="dropdown-item">Đăng xuất</a>
 						</div>
 					</div>
