@@ -3,8 +3,6 @@
 
 <head th:replace="~{fragments :: header}"></head>
 <body>
-	<!-- Spinner Start -->
-	<!-- Spinner End -->
 
 	<!-- Navbar Start -->
 	<div th:replace="~{fragments :: navbar}"></div>
@@ -14,12 +12,16 @@
 	<div class="container-fluid page-header mb-5 wow fadeIn"
 		data-wow-delay="0.1s">
 		<div class="container">
-			<h1 class="display-3 mb-3 animated slideInDown">Products</h1>
+			<h1 th:text="${products.get(0).loaiHang.tenLoai}"
+				class="display-3 mb-3 animated slideInDown"></h1>
 			<nav aria-label="breadcrumb animated slideInDown">
 				<ol class="breadcrumb mb-0">
-					<li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
-					<li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-					<li class="breadcrumb-item text-dark active" aria-current="page">Products</li>
+					<li class="breadcrumb-item"><a class="text-body"
+						th:href="@{/index}">Home</a></li>
+					<li class="breadcrumb-item"><a class="text-body"
+						th:href="@{/category}">Categories</a></li>
+					<li th:text="${products.get(0).loaiHang.tenLoai}"
+						class="breadcrumb-item text-dark active" aria-current="page"></li>
 				</ol>
 			</nav>
 		</div>
@@ -36,16 +38,20 @@
 							<div class="position-relative bg-light overflow-hidden">
 								<img class="img-fluid w-100" th:src="${product.getHinhAnh()}"
 									alt="">
-								<div
-									class="bg-secondary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">New</div>
+								<div th:if="${product.giaSP < product.giaCu}"
+									class="bg-secondary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Sale</div>
 							</div>
 							<div class="text-center p-4">
 								<a class="d-block h5 mb-2"
 									th:href="@{/product/{id}(id=${product.getMaSP()})}"
 									th:text="${product.getTenSP()}"></a> <span
-									class="text-primary me-1" th:text="${product.getGiaSale()}"></span>
-								<span class="text-body text-decoration-line-through"
-									th:text="${product.getGiaSP()}"></span>
+									th:if="${product.giaSP < product.giaCu}"
+									th:text="${product.giaSP}" class="text-primary me-1"></span> <span
+									th:if="${product.giaSP < product.giaCu}"
+									th:text="${product.giaCu}"
+									class="text-body text-decoration-line-through"></span> <span
+									th:if="${product.giaSP > product.giaCu}"
+									th:text="${product.giaSP}" class="text-primary me-1"></span>
 							</div>
 							<div class="d-flex border-top">
 								<small class="w-50 text-center border-end py-2"> <a

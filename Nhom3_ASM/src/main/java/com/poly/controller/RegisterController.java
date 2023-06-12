@@ -42,22 +42,18 @@ public class RegisterController {
 		TaiKhoan tk = new TaiKhoan();
 		KhachHang kh = new KhachHang();
 		GioHang gh = new GioHang();
-	
-		
-			
-		tk.setUsername(username);
-		tk.setPassword(password);
-
 		kh.setDiaChi(diachi);
 		kh.setDienThoai(dienthoai);
 		kh.setEmail(email);
 		kh.setHoKH(ho);
 		kh.setTenKH(ten);
 		kh.setNgaySinh(ngaysinh);
-		kh.setTaiKhoan(tk);
 		gh.setTaiKhoan(tk);
-		taiKhoanDAO.save(tk);
+		tk.setUsername(username);
+		tk.setPassword(password);
+		tk.setKhachHang(kh);
 		khachHangDAO.save(kh);
+		taiKhoanDAO.save(tk);
 		gioHangDAO.save(gh);
 		return "redirect:/index";
 

@@ -29,8 +29,8 @@ public class SanPham {
 	String tenSP;
 	@Column(name = "gia_sp")
 	Double giaSP;
-	@Column(name = "gia_sale")
-	Double giaSale;
+	@Column(name = "gia_cu")
+	Double giaCu;
 	@Column(name = "ton_kho")
 	Integer tonKho;
 	@Column(name = "mo_ta")

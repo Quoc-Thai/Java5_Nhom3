@@ -8,78 +8,96 @@
 	<div th:replace="~{fragments :: navbar}"></div>
 	<!-- Navbar End -->
 
-	<section class="vh-200" style="background-color: #fdccbc;">
+	<section class="vh-200"
+		style="background-color: #fdccbc; margin-top: 120px">
 		<div class="container h-100">
 			<div
 				class="row d-flex justify-content-center align-items-center h-100">
 				<div class="col">
 					<p>
-						<span class="h2">Shopping Cart </span><span class="h4">(1
-							item in your cart)</span>
+						<span class="h2">Giỏ Hàng</span><span class="h4"
+							th:field="@{totalProduct}"
+							th:text="'(Có '+${totalProduct}+'
+							sản phẩm trong giỏ)'"></span>
 					</p>
-					<div class="card mb-4">
-						<div th:each="cartDetail : ${cart.gioHangCT}"
-							class="card-body p-4">
-							<div class="row align-items-center">
-								<div class="col-md-2">
-									<img th:src="${cartDetail.getSanPham.getHinhAnh}"
-										class="img-fluid" alt="Generic placeholder image">
-								</div>
-								<div class="col-md-2 d-flex justify-content-center">
-									<div>
-										<p class="small text-muted mb-4 pb-2">Name</p>
-										<p th:text="${cartDetail.getSanPham.getTenSP}"
-											class="lead fw-normal mb-0"></p>
+					<div class="card mb-4" style="border: 2px solid;">
+						<form action="" method="post">
+							<div th:each="cartDetail : ${cart.gioHangCT}"
+								class="card-body p-4" style="border-bottom: 2px solid;">
+								<div class="row align-items-center">
+									<div class="col-md-2">
+										<img th:src="${cartDetail.getSanPham.getHinhAnh}"
+											class="img-fluid" alt="Generic placeholder image">
 									</div>
-								</div>
-								<div class="col-md-2 d-flex justify-content-center">
-									<div>
-										<p class="small text-muted mb-4 pb-2">Loại</p>
-										<p th:text="${cartDetail.getSanPham.getLoaiHang.getTenLoai}" class="lead fw-normal mb-0"></p>
+									<div class="col-md-2 d-flex justify-content-center">
+										<div>
+											<p class="small text-muted mb-4 pb-2">Tên</p>
+											<a th:href="@{/product/{id}(id=${cartDetail.sanPham.maSP})}" th:text="${cartDetail.getSanPham.getTenSP}"
+												class="lead fw-normal mb-0"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2 d-flex justify-content-center">
-									<div>
-										<p class="small text-muted mb-4 pb-2">Quantity</p>
-										<p th:text="${cartDetail.getSoLuong}" class="lead fw-normal mb-0"></p>
+									<div class="col-md-2 d-flex justify-content-center">
+										<div>
+											<p class="small text-muted mb-4 pb-2">Số lượng</p>
+											<p class="lead fw-normal mb-0">
+												<input type="number" name="quantity"
+													th:value="${cartDetail.getSoLuong}" min="1"
+													style="width: 50px">
+											</p>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2 d-flex justify-content-center">
-									<div>
-										<p class="small text-muted mb-4 pb-2">Price</p>
-										<p th:text="${cartDetail.getSanPham.getGiaSP}" class="lead fw-normal mb-0"></p>
+									<div class="col-md-2 d-flex justify-content-center">
+										<div>
+											<p class="small text-muted mb-4 pb-2">Gía</p>
+											<p th:text="${'$'+cartDetail.getSanPham.getGiaSP}"
+												class="lead fw-normal mb-0"></p>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2 d-flex justify-content-center">
-									<div>
-										<p class="small text-muted mb-4 pb-2">Total</p>
-										<p th:text="${cartDetail.getSanPham.getGiaSP * cartDetail.getSoLuong}" class="lead fw-normal mb-0"></p>
+									<div class="col-md-2 d-flex justify-content-center">
+										<div>
+											<p class="small text-muted mb-4 pb-2">Tổng</p>
+											<p
+												th:text="${'$'+cartDetail.getSanPham.getGiaSP * cartDetail.getSoLuong}"
+												class="lead fw-normal mb-0"></p>
+										</div>
+									</div>
+									<div class="col-md-2 d-flex justify-content-center">
+										<div>
+											<p class="small text-muted mb-4 pb-2"></p>
+											<p class="lead fw-normal mb-0">
+												<button
+													th:formaction="@{/account/cart/edit/{id}(id=${cartDetail.maGHCT})}"
+													class="bi bi-pencil-square" style="margin-right: 30px"></button>
+												<button
+													th:formaction="@{/account/cart/remove/{id}(id=${cartDetail.sanPham.maSP})}"
+													class="bi bi-trash"></button>
+											</p>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 
-					<div class="card mb-5">
+					<div class="card mb-4">
 						<div class="card-body p-4">
 							<div class="float-end">
 								<p class="mb-0 me-5 d-flex align-items-center">
-									<span class="small text-muted me-2">Order total:</span> <span
-									th:field="@{total}" th:text="${total}" class="lead fw-normal"></span>
+									<span class="small text-muted me-2">Tổng giỏ:</span> <span
+										th:field="@{totalCash}" th:if="${totalProduct}>0"
+										th:text="${'$'+totalCash}" class="lead fw-normal"></span>
 								</p>
 							</div>
 						</div>
 					</div>
-					<div class="d-flex justify-content-end">
-						<button type="button" class="btn btn-light btn-lg me-2">Continue
-							shopping</button>
-						<button type="button" class="btn btn-primary btn-lg">Add
-							to cart</button>
+					<div class="d-flex justify-content-end" style="margin-bottom: 20px">
+						<a th:if="${totalProduct}>0" th:href="@{/account/cart/payment}"
+							class="btn btn-primary btn-lg">To Payment</a>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</section>
+	<div th:replace="~{fragments :: footer}"></div>
 </body>
 </html>
