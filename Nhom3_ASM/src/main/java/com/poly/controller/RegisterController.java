@@ -2,6 +2,7 @@ package com.poly.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,25 +21,24 @@ import jakarta.validation.Valid;
 public class RegisterController {
 	@Autowired
 	TaiKhoanDAO taiKhoanDAO;
-	
+
 	@Autowired
 	KhachHangDAO khachHangDAO;
-	
-	@Autowired 
+
+	@Autowired
 	GioHangDAO gioHangDAO;
-	
-	
-	
+
 	@GetMapping("/dangki")
-	public String dangki() {
+	public String dangki(@ModelAttribute("account") TaiKhoan account, @ModelAttribute("customer") KhachHang customer) {
 		return "register";
 	}
 
 	@PostMapping("/dangki/submit")
-	public String submit(@Valid @ModelAttribute("account") TaiKhoan account,@RequestParam("username") String username, @RequestParam("password") String password,
-			@RequestParam("ngaysinh") String ngaysinh, @RequestParam("ho") String ho, @RequestParam("ten") String ten,
-			@RequestParam("diachi") String diachi, @RequestParam("dienthoai") String dienthoai,
-			@RequestParam("email") String email) {
+	public String submit(@Valid @ModelAttribute("account") TaiKhoan account,@Valid @ModelAttribute("customer") KhachHang khachHang, BindingResult result,
+			@RequestParam("username") String username, @RequestParam("password") String password,
+			@RequestParam("ngaySinh") String ngaysinh, @RequestParam("hoKH") String ho,
+			@RequestParam("tenKH") String ten, @RequestParam("diaChi") String diachi,
+			@RequestParam("dienThoai") String dienthoai, @RequestParam("email") String email) {
 		TaiKhoan tk = new TaiKhoan();
 		KhachHang kh = new KhachHang();
 		GioHang gh = new GioHang();

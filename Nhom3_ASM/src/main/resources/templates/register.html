@@ -15,7 +15,7 @@
 						style="border-radius: 15px;">
 						<div class="card-body p-4 p-md-5">
 							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng kí khách hàng</h3>
-							<form th:action="@{/dangki/submit}" th:object="${account}"
+							<form th:action="@{/dangki/submit}" th:object="${customer}"
 								class="login" method="post">
 								<div class="row" th:object="${account}">
 									<div class="col-md-6 mb-4">
@@ -31,9 +31,9 @@
 										<div class="form-outline">
 											<input type="password" name="password"
 												class="form-control form-control-lg" placeholder="Mật khẩu" />
-											<div class="alert alert-warning"
-												th:if="${#fields.hasErrors('password')}"
-												th:errors="*{password}"></div>
+												<div class="alert alert-warning"
+											th:if="${#fields.hasErrors('password')}"
+											th:errors="*{password}"></div>
 										</div>
 									</div>
 								</div>
@@ -42,6 +42,8 @@
 										<div class="form-outline">
 											<input type="text" name="hoKH"
 												class="form-control form-control-lg" placeholder="Họ" />
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('hoKH')}" th:errors="*{hoKH}"></div>
 										</div>
 									</div>
 									<div class="col-md-6 mb-4">
@@ -49,6 +51,8 @@
 										<div class="form-outline">
 											<input type="text" name="tenKH"
 												class="form-control form-control-lg" placeholder="Tên" />
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('tenKH')}" th:errors="*{tenKH}"></div>
 										</div>
 									</div>
 								</div>
@@ -57,13 +61,17 @@
 										<div class="form-outline">
 											<input type="date" name="ngaySinh"
 												class="form-control form-control-lg" placeholder="Ngày sinh" />
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('ngaySinh')}"
+												th:errors="*{ngaySinh}"></div>
 										</div>
 									</div>
 									<div class="col-md-6 mb-4">
 										<div class="form-outline">
 											<input type="email" name="email"
 												class="form-control form-control-lg" placeholder="Email" />
-
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 										</div>
 									</div>
 								</div>
@@ -73,7 +81,9 @@
 											<input type="text" name="dienThoai"
 												class="form-control form-control-lg"
 												placeholder="Số điện thoại" />
-
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('dienThoai')}"
+												th:errors="*{dienThoai}"></div>
 										</div>
 									</div>
 
@@ -81,7 +91,8 @@
 										<div class="form-outline">
 											<input type="text" name="diaChi"
 												class="form-control form-control-lg" placeholder="Địa chỉ" />
-
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('diaChi')}" th:errors="*{diaChi}"></div>
 										</div>
 									</div>
 								</div>
