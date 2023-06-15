@@ -21,9 +21,10 @@
 							sản phẩm trong giỏ)'"></span>
 					</p>
 					<div class="card mb-4" style="border: 2px solid;">
-						<form action="" method="post">
-							<div th:each="cartDetail : ${cart.gioHangCT}"
-								class="card-body p-4" style="border-bottom: 2px solid;">
+
+						<div th:each="cartDetail : ${cart.gioHangCT}"
+							class="card-body p-4" style="border-bottom: 2px solid;">
+							<form action="" method="post">
 								<div class="row align-items-center">
 									<div class="col-md-2">
 										<img th:src="${cartDetail.getSanPham.getHinhAnh}"
@@ -32,7 +33,8 @@
 									<div class="col-md-2 d-flex justify-content-center">
 										<div>
 											<p class="small text-muted mb-4 pb-2">Tên</p>
-											<a th:href="@{/product/{id}(id=${cartDetail.sanPham.maSP})}" th:text="${cartDetail.getSanPham.getTenSP}"
+											<a th:href="@{/product/{id}(id=${cartDetail.sanPham.maSP})}"
+												th:text="${cartDetail.getSanPham.getTenSP}"
 												class="lead fw-normal mb-0"></a>
 										</div>
 									</div>
@@ -48,7 +50,7 @@
 									</div>
 									<div class="col-md-2 d-flex justify-content-center">
 										<div>
-											<p class="small text-muted mb-4 pb-2">Gía</p>
+											<p class="small text-muted mb-4 pb-2">Giá</p>
 											<p th:text="${'$'+cartDetail.getSanPham.getGiaSP}"
 												class="lead fw-normal mb-0"></p>
 										</div>
@@ -75,8 +77,9 @@
 										</div>
 									</div>
 								</div>
-							</div>
-						</form>
+							</form>
+						</div>
+
 					</div>
 
 					<div class="card mb-4">

@@ -65,7 +65,7 @@ public class LoginController {
 	/////////////////////////////////////////////////////////////////////////////
 	@GetMapping("/changePassword")
 	public String form() {
-		return "changePassword";
+		return "changePassword";	
 	}
 	@PostMapping("/changePassword/submit")
 		public String DoiMatKhau(Model model, @RequestParam("passOld") String passOld,

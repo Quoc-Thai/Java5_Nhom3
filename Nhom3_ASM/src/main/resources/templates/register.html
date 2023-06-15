@@ -6,106 +6,101 @@
 <head th:replace="~{fragments :: header}"></head>
 <link rel="stylesheet" href="/css/dangnhap.css">
 <body>
- <div th:replace="~{fragments :: navbar}"></div>
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100" style="margin-top: 100px">
-    <div class="row justify-content-center align-items-center h-100">
-      <div class="col-12 col-lg-9 col-xl-7">
-        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-          <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng kí khách hàng</h3>
-            <form th:action="@{/dangki/submit}" class="login" method="post">
-             
-              <div class="row">
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                    <input type="text" name="username" class="form-control form-control-lg" 
-                    placeholder="Tài khoản"/>
-                    	
-                  </div>
+	<div th:replace="~{fragments :: navbar}"></div>
+	<section class="vh-100 gradient-custom">
+		<div class="container py-5 h-100" style="margin-top: 100px">
+			<div class="row justify-content-center align-items-center h-100">
+				<div class="col-12 col-lg-9 col-xl-7">
+					<div class="card shadow-2-strong card-registration"
+						style="border-radius: 15px;">
+						<div class="card-body p-4 p-md-5">
+							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng kí khách hàng</h3>
+							<form th:action="@{/dangki/submit}" th:object="${account}"
+								class="login" method="post">
+								<div class="row" th:object="${account}">
+									<div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="text" name="username"
+												class="form-control form-control-lg" placeholder="Tài khoản" />
+										</div>
+										<div class="alert alert-warning"
+											th:if="${#fields.hasErrors('username')}"
+											th:errors="*{username}"></div>
+									</div>
+									<div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="password" name="password"
+												class="form-control form-control-lg" placeholder="Mật khẩu" />
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('password')}"
+												th:errors="*{password}"></div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="text" name="hoKH"
+												class="form-control form-control-lg" placeholder="Họ" />
+										</div>
+									</div>
+									<div class="col-md-6 mb-4">
 
-                </div>
-                
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                    <input type="password" name="password" class="form-control form-control-lg" 
-                    placeholder="Mật khẩu"/>
-                  </div>
-                </div>
-              </div>
-              
-               <div class="row">
-                <div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="text" name="tenKH"
+												class="form-control form-control-lg" placeholder="Tên" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="date" name="ngaySinh"
+												class="form-control form-control-lg" placeholder="Ngày sinh" />
+										</div>
+									</div>
+									<div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="email" name="email"
+												class="form-control form-control-lg" placeholder="Email" />
 
-                  <div class="form-outline">
-                    <input type="text" name="ho" class="form-control form-control-lg" 
-                    placeholder="Họ"/>
-                  </div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="text" name="dienThoai"
+												class="form-control form-control-lg"
+												placeholder="Số điện thoại" />
 
-                </div>
-                
-                <div class="col-md-6 mb-4">
+										</div>
+									</div>
 
-                  <div class="form-outline">
-                    <input type="text" name="ten" class="form-control form-control-lg" 
-                    placeholder="Tên"/>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-6 mb-4">
+									<div class="col-md-6 mb-4">
+										<div class="form-outline">
+											<input type="text" name="diaChi"
+												class="form-control form-control-lg" placeholder="Địa chỉ" />
 
-                  <div class="form-outline">
-                    <input type="date" name="ngaysinh" class="form-control form-control-lg" 
-                    placeholder="Ngày sinh"/>
-                  </div>
-
-                </div>
-                
-                <div class="col-md-6 mb-4">
-
-                  <div class="form-outline">
-                    <input type="email" name="email" class="form-control form-control-lg" 
-                    placeholder="Email"/>   
-                  </div>
-                </div>
-              </div>
-              
-                <div class="row">
-                <div class="col-md-6 mb-4">
-
-                  <div class="form-outline">
-                    <input type="text" name="dienthoai" class="form-control form-control-lg" 
-                    placeholder="Số điện thoại"/>
-                  </div>
-
-                </div>
-                
-                <div class="col-md-6 mb-4">
-
-                  <div class="form-outline">
-                    <input type="text" name="diachi" class="form-control form-control-lg" 
-                    placeholder="Địa chỉ"/>   
-                  </div>
-                </div>
-              </div>
-              <div class="mt-4 pt-2">
-                <input class="btn btn-primary btn-lg" type="submit" value="Đăng kí" />
-              </div>
-                <div class="mt-4 pt-2">
-               <a th:href="@{/login}">Đã có tài khoản</a>
-                <a th:href="@{/index}">Quay lại</a>
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<div th:replace="~{fragments :: footer}"></div>
+										</div>
+									</div>
+								</div>
+								<div class="mt-4 pt-2">
+									<input class="btn btn-primary btn-lg" type="submit"
+										value="Đăng kí" />
+								</div>
+								<div class="mt-4 pt-2">
+									<a th:href="@{/login}">Đã có tài khoản</a> <a
+										th:href="@{/index}">Quay lại</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div th:replace="~{fragments :: footer}"></div>
 </body>
 
 </html>
