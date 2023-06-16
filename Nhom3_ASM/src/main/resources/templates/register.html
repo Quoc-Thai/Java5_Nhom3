@@ -12,29 +12,9 @@
 					<div class="card shadow-2-strong card-registration"
 						style="border-radius: 15px;">
 						<div class="card-body p-4 p-md-5">
-							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng kí khách hàng</h3>
-							<form th:action="@{/dangki/submit}" th:object="${customer}"
+							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng kí thông tin khách hàng</h3>
+							<form th:action="@{/dangki/info/submit}" th:object="${customer}"
 								class="login" method="post">
-								<div class="row" th:object="${account}">
-									<div class="col-md-6 mb-4">
-										<div class="form-outline">
-											<input type="text" name="username"
-												class="form-control form-control-lg" placeholder="Tài khoản" />
-										</div>
-										<div class="alert alert-warning"
-											th:if="${#fields.hasErrors('username')}"
-											th:errors="*{username}"></div>
-									</div>
-									<div class="col-md-6 mb-4">
-										<div class="form-outline">
-											<input type="password" name="password"
-												class="form-control form-control-lg" placeholder="Mật khẩu" />
-												<div class="alert alert-warning"
-											th:if="${#fields.hasErrors('password')}"
-											th:errors="*{password}"></div>
-										</div>
-									</div>
-								</div>
 								<div class="row">
 									<div class="col-md-6 mb-4">
 										<div class="form-outline">
@@ -45,7 +25,6 @@
 										</div>
 									</div>
 									<div class="col-md-6 mb-4">
-
 										<div class="form-outline">
 											<input type="text" name="tenKH"
 												class="form-control form-control-lg" placeholder="Tên" />
@@ -99,8 +78,7 @@
 										value="Đăng kí" />
 								</div>
 								<div class="mt-4 pt-2">
-									<a th:href="@{/login}">Đã có tài khoản</a> <a
-										th:href="@{/index}">Quay lại</a>
+									<a th:href="@{/index}">Quay lại</a>
 								</div>
 							</form>
 						</div>
