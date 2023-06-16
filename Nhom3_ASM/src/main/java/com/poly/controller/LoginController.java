@@ -49,7 +49,8 @@ public class LoginController {
 		var taikhoan = taiKhoanDAO.findAll();
 		for (TaiKhoan tk : taikhoan) {
 			if (tk.getUsername().equals(username) && tk.getPassword().equals(password)) {
-				TaiKhoan acc = new TaiKhoan(username, password, rm, null, null);
+				TaiKhoan acc = new TaiKhoan(username, password, tk.getIsAdmin(), tk.getActivated(), tk.getHoaDon(),
+						tk.getKhachHang());
 				sessionService.set("currentUser", acc);
 				if (rm.equals(true)) {
 					cookieService.addCookie("rememberUser", username, 10);
@@ -65,7 +66,7 @@ public class LoginController {
 
 	@GetMapping("/changePassword")
 	public String form() {
-		return "changePassword";	
+		return "changePassword";
 	}
 
 	@PostMapping("/changePassword/submit")

@@ -43,7 +43,7 @@
 											<p class="small text-muted mb-4 pb-2">Số lượng</p>
 											<p class="lead fw-normal mb-0">
 												<input type="number" name="quantity"
-													th:value="${cartDetail.getSoLuong}" min="1"
+													th:value="${cartDetail.getSoLuong}" min="1" th:max="${cartDetail.sanPham.tonKho}"
 													style="width: 50px">
 											</p>
 										</div>

@@ -12,10 +12,12 @@ import com.poly.DAO.GioHangChiTietDAO;
 import com.poly.DAO.GioHangDAO;
 import com.poly.DAO.HoaDonChiTietDAO;
 import com.poly.DAO.HoaDonDAO;
+import com.poly.DAO.SanPhamDAO;
 import com.poly.model.GioHang;
 import com.poly.model.GioHangChiTiet;
 import com.poly.model.HoaDon;
 import com.poly.model.HoaDonChiTiet;
+import com.poly.model.SanPham;
 import com.poly.model.TaiKhoan;
 
 import jakarta.servlet.http.HttpSession;
@@ -31,6 +33,8 @@ public class ReceiptController {
 	@Autowired
 	HoaDonChiTietDAO hoaDonChiTietDAO;
 	@Autowired
+	SanPhamDAO sanPhamDAO;
+	@Autowired
 	HttpSession session;
 
 	@GetMapping("/account/cart/payment")
@@ -44,6 +48,12 @@ public class ReceiptController {
 			HoaDonChiTiet hdct = new HoaDonChiTiet(null, ghct.getSanPham().getGiaSP(), ghct.getSoLuong(),
 					ghct.getSanPham().getGiaSP() * ghct.getSoLuong(), ghct.getSanPham(), hd);
 			hoaDonChiTietDAO.save(hdct);
+			SanPham sp = sanPhamDAO.findById(ghct.getSanPham().getMaSP()).get();
+			sp.setTonKho(sp.getTonKho() - ghct.getSoLuong());
+			if (sp.getTonKho() == 0) {
+				sp.setAvailable(false);
+			}
+			sanPhamDAO.save(sp);
 			gioHangChiTietDAO.delete(ghct);
 		}
 		HoaDon recent = hoaDonDAO.getRecentReceipt(user.getUsername());
@@ -56,7 +66,6 @@ public class ReceiptController {
 		List<HoaDon> list = hoaDonDAO.findAll();
 		for (HoaDon hd : list) {
 			if (hd.getTaiKhoan().getUsername().equals(user.getUsername()) && hd.getMaHD() == id) {
-				System.out.println(hd.getMaHD());
 				model.addAttribute("receipt", hd);
 				return "receipt";
 			}

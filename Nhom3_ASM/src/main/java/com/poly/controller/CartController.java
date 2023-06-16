@@ -38,7 +38,12 @@ public class CartController {
 		GioHang gioHang = gioHangDAO.getGioHangByUserId(user.getUsername());
 		GioHangChiTiet exist = gioHangChiTietDAO.getGioHangChiTietByMaSP(id);
 		if (exist != null) {
-			exist.setSoLuong(exist.getSoLuong() + quantity);
+			Integer num = exist.getSoLuong() + quantity;
+			if (num > sanPham.getTonKho()) {
+				exist.setSoLuong(sanPham.getTonKho());
+			} else {
+				exist.setSoLuong(num);
+			}
 			gioHangChiTietDAO.save(exist);
 		} else {
 			GioHangChiTiet ghct = new GioHangChiTiet(null, quantity, sanPham, gioHang);
@@ -62,11 +67,15 @@ public class CartController {
 	@PostMapping("/account/cart/edit/{id}")
 	public String editCart(Model model, @PathVariable Integer id, @RequestParam("quantity") Integer quantity) {
 		GioHangChiTiet ghct = gioHangChiTietDAO.findById(id).get();
-		ghct.setSoLuong(quantity);
+		if (quantity > ghct.getSoLuong()) {
+			ghct.setSoLuong(ghct.getSoLuong());
+		} else {
+			ghct.setSoLuong(quantity);
+		}
 		gioHangChiTietDAO.save(ghct);
 		return "redirect:/account/cart";
 	}
-	
+
 	@PostMapping("/account/cart/remove/{id}")
 	public String deleteCart(Model model, @PathVariable Integer id) {
 		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");

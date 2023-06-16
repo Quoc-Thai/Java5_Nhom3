@@ -2,6 +2,8 @@ package com.poly.DAO;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,7 +14,7 @@ public interface SanPhamDAO extends JpaRepository<SanPham, Integer> {
 	List<SanPham> getTop8SanPhamByCategoryId(Integer maLoai);
 
 	@Query("SELECT p FROM SanPham p WHERE p.loaiHang.maLoai = ?1 AND p.available = TRUE")
-	List<SanPham> getSanPhamByCategoryId(Integer maLoai);
+	Page<SanPham> getSanPhamByCategoryId(Integer maLoai, Pageable pageable);
 
 	@Query("SELECT p FROM SanPham p WHERE p.loaiHang.maLoai = ?1 AND p.available = TRUE")
 	List<SanPham> getRelatedSanPham(Integer maLoai);
