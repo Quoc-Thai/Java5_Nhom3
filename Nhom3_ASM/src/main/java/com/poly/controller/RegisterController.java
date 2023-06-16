@@ -1,5 +1,7 @@
 package com.poly.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,7 +69,19 @@ public class RegisterController {
 		if (result.hasErrors()) {
 			model.addAttribute("customer", kh);
 			return "register";
+		}else {
+			var khCheck = khachHangDAO.findAll();
+			for(KhachHang check : khCheck) {
+				if(check.getEmail().equals(kh.getEmail())) {
+					model.addAttribute("message","Tài khoản email đã tồn tại!!");
+					return "register1";
+				}
+			}
 		}
+		
+			
+		
+		
 		khachHangDAO.save(kh);
 		TaiKhoan tk = (TaiKhoan) session.getAttribute("account");
 		tk.setKhachHang(kh);
