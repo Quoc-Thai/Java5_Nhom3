@@ -12,24 +12,9 @@ public class SwitchPageController {
 		return "about";
 	}
 
-	@GetMapping("/product")
-	public String product() {
-		return "product";
-	}
-
-	@GetMapping("/blog")
-	public String blog() {
-		return "blog";
-	}
-
 	@GetMapping("/feature")
 	public String feature() {
 		return "feature";
-	}
-
-	@GetMapping("/testimonial")
-	public String testimonial() {
-		return "testimonial";
 	}
 
 	@GetMapping("/contact")
@@ -40,10 +25,6 @@ public class SwitchPageController {
 	@GetMapping("/404")
 	public String Error() {
 		return "404";
-	}
-	@GetMapping("/dangnhap")
-	public String Dangnhap() {
-		return "dangnhap";
 	}
 	
 }

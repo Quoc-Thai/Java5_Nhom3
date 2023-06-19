@@ -5,16 +5,17 @@
 <link rel="stylesheet" href="/css/dangnhap.css">
 <body>
 	<div th:replace="~{fragments :: navbar}"></div>
-	<section class="vh-100 gradient-custom">
+	<section class="vh-200 gradient-custom">
 		<div class="container py-5 h-100" style="margin-top: 100px">
 			<div class="row justify-content-center align-items-center h-100">
 				<div class="col-12 col-lg-9 col-xl-7">
 					<div class="card shadow-2-strong card-registration"
 						style="border-radius: 15px;">
 						<div class="card-body p-4 p-md-5">
-							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng kí thông tin khách hàng</h3>
-							<form th:action="@{/dangki/info/submit}" th:object="${customer}"
-								class="login" method="post">
+							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Đăng kí thông tin
+								khách hàng</h3>
+							<form th:action="@{/register/info/submit}"
+								th:object="${customer}" class="login" method="post">
 								<div class="row">
 									<div class="col-md-6 mb-4">
 										<div class="form-outline">
@@ -73,12 +74,13 @@
 										</div>
 									</div>
 								</div>
+								<p th:text="${message}" style="color: red;"></p>
 								<div class="mt-4 pt-2">
 									<input class="btn btn-primary btn-lg" type="submit"
 										value="Đăng kí" />
 								</div>
 								<div class="mt-4 pt-2">
-									<a th:href="@{/index}">Quay lại</a>
+									<a th:href="@{/register/account}">Quay lại</a>
 								</div>
 							</form>
 						</div>

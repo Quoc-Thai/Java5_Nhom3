@@ -31,7 +31,7 @@ public class TaiKhoan {
 	@Column(name = "is_admin")
 	Boolean isAdmin = false;
 	@Column(name = "activated")
-	Boolean activated = false;
+	Boolean activated = true;
 
 	@OneToMany(mappedBy = "taiKhoan")
 	List<HoaDon> hoaDon;

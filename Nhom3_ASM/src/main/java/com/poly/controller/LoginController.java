@@ -55,13 +55,18 @@ public class LoginController {
 		for (TaiKhoan tk : taikhoan) {
 			if (tk.getUsername().equals(username) && tk.getPassword().equals(password)) {
 				TaiKhoan acc = taiKhoanDAO.findById(username).get();
-				sessionService.set("currentUser", acc);
-				if (rm.equals(true)) {
-					cookieService.addCookie("rememberUser", username, 10);
+				if (acc.getActivated() == false) {
+					model.addAttribute("message", "Tài khoản đã bị khóa vui lòng liên hệ với web để được hỗ trợ");
+					return "login";
 				} else {
-					cookieService.removeCookie("rememberUser");
+					sessionService.set("currentUser", acc);
+					if (rm.equals(true)) {
+						cookieService.addCookie("rememberUser", username, 10);
+					} else {
+						cookieService.removeCookie("rememberUser");
+					}
+					return "redirect:/index";
 				}
-				return "redirect:/index";
 			}
 		}
 		model.addAttribute("message", "Tài khoản hoặc mật khẩu không đúng");

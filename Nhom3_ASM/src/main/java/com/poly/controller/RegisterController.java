@@ -1,6 +1,6 @@
 package com.poly.controller;
 
-import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import com.poly.DAO.KhachHangDAO;
 import com.poly.DAO.TaiKhoanDAO;
 import com.poly.model.KhachHang;
 import com.poly.model.TaiKhoan;
+import com.poly.service.MailerServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -34,59 +35,106 @@ public class RegisterController {
 	@Autowired
 	HttpSession session;
 
-	@GetMapping("/dangki/account")
-	public String dangki() {
-		return "register0";
+	@Autowired
+	MailerServiceImpl mailer;
+
+	TaiKhoan tempAcc = null;
+	KhachHang tempInfo = null;
+	String code = null;
+
+	@GetMapping("/register/account")
+	public String dangki1(@ModelAttribute("account") TaiKhoan taiKhoan) {
+		return "preRegister";
 	}
 
-	@PostMapping("/dangki/account/submit")
-	public String dangki1(Model model, @ModelAttribute("account") TaiKhoan taiKhoan,
+	@PostMapping("/register/account/submit")
+	public String dangki1(Model model, @Valid @ModelAttribute("account") TaiKhoan taiKhoan, BindingResult result,
 			@RequestParam("password1") String retype) {
-		TaiKhoan tk = new TaiKhoan(taiKhoan.getUsername(), taiKhoan.getPassword(), false, null, null, null);
-		if (!tk.getPassword().equals(retype)) {
-			model.addAttribute("message", "Mật khẩu nhập lại không trùng khớp");
-			return "register0";
+		if (result.hasErrors()) {
+			model.addAttribute("account", taiKhoan);
+			return "preRegister";
 		} else {
-			var taikhoancheck = taiKhoanDAO.findAll();
-			for (TaiKhoan tkcheck : taikhoancheck) {
-				if (tkcheck.getUsername().equals(tk.getUsername())) {
-					model.addAttribute("message", "Tài khoản đã tồn tại");
-					return "register0";
+			TaiKhoan tk = new TaiKhoan(taiKhoan.getUsername(), taiKhoan.getPassword(), false, null, null, null);
+			if (!tk.getPassword().equals(retype)) {
+				model.addAttribute("message", "Mật khẩu nhập lại không trùng khớp");
+				return "preRegister";
+			} else {
+				var taikhoancheck = taiKhoanDAO.findAll();
+				for (TaiKhoan tkcheck : taikhoancheck) {
+					if (tkcheck.getUsername().equals(tk.getUsername()) && tkcheck.getActivated() == true) {
+						model.addAttribute("message", "Tài khoản đã tồn tại");
+						return "preRegister";
+					}
 				}
+//				session.setAttribute("account", taiKhoan);
+				tempAcc = taiKhoan;
+				return "redirect:/register/info";
 			}
-			session.setAttribute("account", taiKhoan);
-			return "redirect:/dangki/info";
 		}
 	}
 
-	@GetMapping("/dangki/info")
+	@GetMapping("/register/info")
 	public String dangki2(Model model, @ModelAttribute("customer") KhachHang kh) {
+		if (tempAcc == null) {
+			return "redirect:/register/account";
+		}
 		return "register";
 	}
 
-	@PostMapping("/dangki/info/submit")
+	@PostMapping("/register/info/submit")
 	public String dangki2(Model model, @Valid @ModelAttribute("customer") KhachHang kh, BindingResult result) {
+		TaiKhoan tk = tempAcc;
 		if (result.hasErrors()) {
 			model.addAttribute("customer", kh);
 			return "register";
-		}else {
-			var khCheck = khachHangDAO.findAll();
-			for(KhachHang check : khCheck) {
-				if(check.getEmail().equals(kh.getEmail())) {
-					model.addAttribute("message","Tài khoản email đã tồn tại!!");
-					return "register1";
+		} else {
+			var tkCheck = taiKhoanDAO.findAll();
+			for (TaiKhoan tkcheck : tkCheck) {
+				if (tkcheck.getUsername().equals(tk.getUsername())) {
+					kh.setMaKH(tkcheck.getKhachHang().getMaKH());
 				}
 			}
 		}
-		
-			
-		
-		
-		khachHangDAO.save(kh);
-		TaiKhoan tk = (TaiKhoan) session.getAttribute("account");
-		tk.setKhachHang(kh);
-		taiKhoanDAO.save(tk);
-		return "redirect:/login";
+		tempInfo = kh;
+
+//		khachHangDAO.save(kh);
+//		tk.setKhachHang(kh);
+//		taiKhoanDAO.save(tk);
+		return "redirect:/register/sendMail";
+	}
+
+	@GetMapping("/register/sendMail")
+	public String sendMail() {
+		if (tempAcc == null || tempInfo == null) {
+			return "redirect:/register/account";
+		}
+		Random rand = new Random();
+		code = String.valueOf(rand.nextInt(1000000));
+		mailer.send(tempInfo.getEmail(), "Xác nhận tạo tài khoản", code + " là code xác nhận tạo tài khoản "
+				+ tempAcc.getUsername() + ". Xin vui lòng không cung cấp mã này cho bất kì bên nào khác.");
+		return "redirect:/register/final";
+	}
+
+	@GetMapping("/register/final")
+	public String dangki3() {
+		if (code.isEmpty()) {
+			return "redirect:/register/sendMail";
+		}
+		return "finalRegister";
+	}
+
+	@PostMapping("/register/final/submit")
+	public String dangki3(Model model, @RequestParam("code") String submitCode) {
+		if (code.equals(submitCode)) {
+			khachHangDAO.save(tempInfo);
+			tempAcc.setKhachHang(tempInfo);
+			taiKhoanDAO.save(tempAcc);
+			return "redirect:/login";
+		} else {
+			model.addAttribute("message", "Mã xác nhận không trùng khớp");
+			return "finalRegister";
+		}
+
 	}
 
 	/*
