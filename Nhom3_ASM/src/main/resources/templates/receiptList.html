@@ -40,13 +40,13 @@
 														<td th:text="${receipt.ngayTao}"></td>
 														<td th:text="${receipt.trangThai.tenTrangThai}"></td>
 														<td>
-															<button
-																class="bi bi-pencil-square"
+															<button class="bi bi-pencil-square"
 																th:formaction="@{/account/receipt/{id}(id=${receipt.maHD})}"
 																style="margin-left: 30px"></button>
 														</td>
 														<td>
-															<button th:if="${receipt.trangThai.maTrangThai == 5 or receipt.trangThai.maTrangThai == 4}"
+															<button
+																th:if="${receipt.trangThai.maTrangThai == 5 or receipt.trangThai.maTrangThai == 4}"
 																class="bi bi-arrow-clockwise"
 																th:formaction="@{/account/recart/{id}(id=${receipt.maHD})}"
 																style="margin-left: 30px"></button>

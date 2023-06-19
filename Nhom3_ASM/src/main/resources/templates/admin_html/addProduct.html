@@ -36,7 +36,7 @@
 				</div>
 				<div class="card-body">
 					<form method="POST" th:object="${product}" enctype="multipart/form-data">
-						<div class="form-row" th:if="${product}!=null">
+						<div class="form-row" th:if="${product.maSP}!=null">
 							<div class="name">Mã SP</div>
 							<div class="value">
 								<div class="input-group">
@@ -91,22 +91,33 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-row">
+						<div class="form-row" th:if="${product.maSP == null}">
 							<div class="name">Loại</div>
 							<div class="value">
 								<div class="input-group">
 									<div class="rs-select2 js-select-simple select--no-search">
 										<select name="loaiHang.maLoai">
 											<!--<option disabled="disabled" selected="selected">Chọn loại hàng</option>-->
-											<option value="1" th:selected="${product.loaiHang.maLoai == 1}">Nhẫn
+											<option th:each="category : ${categories}" th:value="${category.maLoai}"
+												th:text="${category.tenLoai}">
 											</option>
-											<option value="2" th:selected="${product.loaiHang.maLoai == 2}">Vòng tay
-											</option>
-											<option value="3" th:selected="${product.loaiHang.maLoai == 3}">Đồng hồ
-											</option>
-											<option value="4" th:selected="${product.loaiHang.maLoai == 4}">Dây chuyền
-											</option>
-											<option value="6" th:selected="${product.loaiHang.maLoai == 6}">Bông tay
+										</select>
+										<div class="select-dropdown"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row" th:if="${product.maSP != null}">
+							<div class="name">Loại</div>
+							<div class="value">
+								<div class="input-group">
+									<div class="rs-select2 js-select-simple select--no-search">
+										<select name="loaiHang.maLoai">
+											<!--<option disabled="disabled" selected="selected">Chọn loại hàng</option>-->
+											<option th:each="category : ${categories}" th:value="${category.maLoai}"
+												th:text="${category.tenLoai}"
+												th:selected="${product.loaiHang.maLoai == category.maLoai}">
 											</option>
 										</select>
 										<div class="select-dropdown"></div>
@@ -116,22 +127,32 @@
 						</div>
 
 
-						<div class="form-row">
+						<div class="form-row" th:if="${product.maSP == null}">
 							<div class="name">Thương hiệu</div>
 							<div class="value">
 								<div class="input-group">
 									<div class="rs-select2 js-select-simple select--no-search">
 										<select name="thuongHieu.maTH">
 											<!--<option disabled="disabled" selected="selected">Chọn thương hiệu</option>-->
-											<option value="1" th:selected="${product.thuongHieu.maTH == '1'}">PNJ
+											<option th:each="brand : ${brands}" th:value="${brand.maTH}"
+												th:text="${brand.tenTH}">
 											</option>
-											<option value="2" th:selected="${product.thuongHieu.maTH == '2'}">Coach
-											</option>
-											<option value="3" th:selected="${product.thuongHieu.maTH == '3'}">Calvin
-												Klein</option>
-											<option value="5" th:selected="${product.thuongHieu.maTH == '5'}">Casio
-											</option>
-											<option value="6" th:selected="${product.thuongHieu.maTH == '6'}">Justcavali
+										</select>
+										<div class="select-dropdown"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row" th:if="${product.maSP != null}">
+							<div class="name">Thương hiệu</div>
+							<div class="value">
+								<div class="input-group">
+									<div class="rs-select2 js-select-simple select--no-search">
+										<select name="thuongHieu.maTH">
+											<!--<option disabled="disabled" selected="selected">Chọn thương hiệu</option>-->
+											<option th:each="brand : ${brands}" th:value="${brand.maTH}"
+												th:text="${brand.tenTH}" th:selected="${product.thuongHieu.maTH == brand.maTH}">
 											</option>
 										</select>
 										<div class="select-dropdown"></div>
@@ -149,26 +170,26 @@
 							</div>
 						</div>
 
-						<!--<div class="form-row p-t-20">
-							<label class="label label--block">Are you an existing customer?</label>
+						<div class="form-row p-t-20">
+							<label class="label label--block">Available?</label>
 							<div class="p-t-15">
 								<label class="radio-container m-r-55">Yes
-									<input type="radio" checked="checked" name="exist">
+									<input type="radio" value="true" th:checked="${product.available}" name="available">
 									<span class="checkmark"></span>
 								</label>
 								<label class="radio-container">No
-									<input type="radio" name="exist">
+									<input type="radio" value="false" th:checked="${!product.available}" name="available">
 									<span class="checkmark"></span>
 								</label>
 							</div>
-						</div>-->
+						</div>
 
 						<div>
-							<button th:if="${product == null}" th:formaction="@{/admin/product/add/submit}"
+							<button th:if="${product.maSP == null}" th:formaction="@{/admin/product/add/submit}"
 								class="btn btn--radius-2 btn--red" type="submit">Create</button>
 						</div>
 						<div>
-							<button th:if="${product != null}" th:formaction="@{/admin/product/edit/submit}"
+							<button th:if="${product.maSP != null}" th:formaction="@{/admin/product/edit/submit}"
 								class="btn btn--radius-2 btn--red" type="submit">Update</button>
 						</div>
 					</form>

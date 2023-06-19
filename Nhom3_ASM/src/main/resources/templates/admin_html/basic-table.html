@@ -110,6 +110,7 @@
 											<th class="border-top-0">Loại</th>
 											<th class="border-top-0">Thương hiệu</th>
 											<th class="border-top-0">Hình ảnh</th>
+											<th class="border-top-0">Available</th>
 											<th class="border-top-0"></th>
 										</tr>
 									</thead>
@@ -123,12 +124,11 @@
 											<td th:text="${sp.loaiHang.tenLoai}"></td>
 											<td th:text="${sp.thuongHieu.tenTH}"></td>
 											<td><img th:src="${sp.getHinhAnh}" width="40px"></td>
+											<td th:text="${sp.available}"></td>
 											<td>
 												<form method="post">
 													<button th:formaction="@{/admin/product/edit/__${sp.maSP}__}"
 														class="bi bi-pencil-square" style="margin-right: 30px"></button>
-													<button th:formaction="@{/admin/product/delete/__${sp.maSP}__}"
-														class="bi bi-trash"></button>
 												</form>
 											</td>
 										</tr>
@@ -155,9 +155,7 @@
 			<!-- ============================================================== -->
 			<!-- footer -->
 			<!-- ============================================================== -->
-			<footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-					href="https://www.wrappixel.com/">wrappixel.com</a>
-			</footer>
+			<div th:replace="~{admin_html/fragments_admin :: footer}"></div>
 			<!-- ============================================================== -->
 			<!-- End footer -->
 			<!-- ============================================================== -->

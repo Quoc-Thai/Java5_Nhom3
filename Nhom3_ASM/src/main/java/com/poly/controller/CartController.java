@@ -83,7 +83,7 @@ public class CartController {
 	@PostMapping("/account/cart/edit/{id}")
 	public String editCart(Model model, @PathVariable Integer id, @RequestParam("quantity") Integer quantity) {
 		GioHangChiTiet ghct = gioHangChiTietDAO.findById(id).get();
-		if (quantity > ghct.getSoLuong()) {
+		if (quantity > ghct.getSanPham().getTonKho()) {
 			ghct.setSoLuong(ghct.getSoLuong());
 		} else {
 			ghct.setSoLuong(quantity);

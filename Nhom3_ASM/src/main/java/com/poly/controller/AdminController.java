@@ -21,8 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.poly.DAO.LoaiHangDAO;
 import com.poly.DAO.SanPhamDAO;
+import com.poly.DAO.TaiKhoanDAO;
+import com.poly.DAO.ThuongHieuDAO;
 import com.poly.model.LoaiHang;
 import com.poly.model.SanPham;
+import com.poly.model.TaiKhoan;
+import com.poly.model.ThuongHieu;
 
 import jakarta.servlet.ServletContext;
 
@@ -34,6 +38,10 @@ public class AdminController {
 	SanPhamDAO sanPhamDAO;
 	@Autowired
 	LoaiHangDAO loaiHangDAO;
+	@Autowired
+	ThuongHieuDAO thuongHieuDAO;
+	@Autowired
+	TaiKhoanDAO taiKhoanDAO;
 
 	@GetMapping("/admin")
 	public String admin() {
@@ -57,13 +65,19 @@ public class AdminController {
 		return "admin_html/fontawesome";
 	}
 
-	@GetMapping("/admin/profile")
-	public String Profile() {
+	@GetMapping("/admin/user/table")
+	public String Profile(Model model) {
+		List<TaiKhoan> list = taiKhoanDAO.findAll();
+		model.addAttribute("users", list);
 		return "admin_html/profile";
 	}
 
 	@GetMapping("/admin/product/add")
-	public String add() {
+	public String add(Model model, @ModelAttribute("product") SanPham product) {
+		List<LoaiHang> cate = loaiHangDAO.findAll();
+		List<ThuongHieu> th = thuongHieuDAO.findAll();
+		model.addAttribute("categories", cate);
+		model.addAttribute("brands", th);
 		return "admin_html/addProduct";
 	}
 
@@ -75,7 +89,6 @@ public class AdminController {
 		File file = new ClassPathResource("static/img/product/" + lh.getTenFolder()).getFile();
 		Path path = Paths.get(file.getAbsolutePath() + File.separator + filename);
 		Files.copy(img.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
 		product.setHinhAnh("../img/product/" + lh.getTenFolder() + "/" + filename);
 		sanPhamDAO.save(product);
 		return "redirect:/index";
@@ -83,6 +96,10 @@ public class AdminController {
 
 	@PostMapping("admin/product/edit/{id}")
 	public String edit(Model model, @PathVariable("id") Integer id) {
+		List<LoaiHang> cate = loaiHangDAO.findAll();
+		List<ThuongHieu> th = thuongHieuDAO.findAll();
+		model.addAttribute("categories", cate);
+		model.addAttribute("brands", th);
 		SanPham sp = sanPhamDAO.findById(id).get();
 		model.addAttribute("product", sp);
 		sanPhamDAO.save(sp);
@@ -92,12 +109,18 @@ public class AdminController {
 	@PostMapping("admin/product/edit/submit")
 	public String editSubmit(Model model, @ModelAttribute("product") SanPham product,
 			@RequestParam("image") MultipartFile img) throws IllegalStateException, IOException {
-		String filename = img.getOriginalFilename();
-		LoaiHang lh = loaiHangDAO.findById(product.getLoaiHang().getMaLoai()).get();
-		File file = new ClassPathResource("static/img/product/" + lh.getTenFolder()).getFile();
-		Path path = Paths.get(file.getAbsolutePath() + File.separator + filename);
-		Files.copy(img.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-		product.setHinhAnh("../img/product/" + lh.getTenFolder() + "/" + filename);
+		System.out.println(product.getAvailable());
+		if (!img.getOriginalFilename().isEmpty()) {
+			String filename = img.getOriginalFilename();
+			LoaiHang lh = loaiHangDAO.findById(product.getLoaiHang().getMaLoai()).get();
+			File file = new ClassPathResource("static/img/product/" + lh.getTenFolder()).getFile();
+			Path path = Paths.get(file.getAbsolutePath() + File.separator + filename);
+			Files.copy(img.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			product.setHinhAnh("../img/product/" + lh.getTenFolder() + "/" + filename);
+		} else {
+			SanPham sp = sanPhamDAO.findById(product.getMaSP()).get();
+			product.setHinhAnh(sp.getHinhAnh());
+		}
 		sanPhamDAO.save(product);
 		return "redirect:/admin/table";
 	}
