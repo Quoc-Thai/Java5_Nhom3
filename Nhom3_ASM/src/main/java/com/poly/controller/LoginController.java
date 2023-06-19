@@ -84,15 +84,22 @@ public class LoginController {
 			@RequestParam("passNew") String passNew, @RequestParam("passNew1") String passNew1) {
 		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");
 		TaiKhoan tk = taiKhoanDAO.findById(user.getUsername()).get();
-
-		if (user.getPassword().equals(passOld) && passNew.equals(passNew1)) {
-			taiKhoanDAO.save(tk);
-
-			return "redirect:/index";
-
+		if (passOld.equals("") || passNew.equals("") || passNew1.equals("")) {
+			model.addAttribute("message", "Vui lòng điền đủ thông tin");
+			return "changePassword";
+		} else if (!passNew.equals(passNew1)) {
+			model.addAttribute("message", "Vui lòng nhập chính xác mật khẩu mới");
+			return "changePassword";
+		} else if(!user.getPassword().equals(passOld)) {
+			model.addAttribute("message", "Vui lòng nhập chính xác mật khẩu cũ");
+			return "changePassword";
 		}
-
-		return "changePassword";
+		else 
+			{tk.setPassword(passNew1);
+			taiKhoanDAO.save(tk);
+			return "redirect:/index";}
+		
+		
 	}
 
 ///////////////////////////////////////////////////////////////////////////
