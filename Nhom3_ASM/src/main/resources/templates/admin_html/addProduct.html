@@ -35,12 +35,21 @@
 					<h2 class="title">Thêm sản phẩm</h2>
 				</div>
 				<div class="card-body">
-					<form method="POST" th:action="@{/admin/product/add/submit}" th:object="${product}" enctype="multipart/form-data">
+					<form method="POST" th:object="${product}" enctype="multipart/form-data">
+						<div class="form-row" th:if="${product}!=null">
+							<div class="name">Mã SP</div>
+							<div class="value">
+								<div class="input-group">
+									<input th:value="${product.maSP}" class="input--style-5" type="text" name="maSP"
+										readonly>
+								</div>
+							</div>
+						</div>
 						<div class="form-row">
 							<div class="name">Tên</div>
 							<div class="value">
 								<div class="input-group">
-									<input class="input--style-5" type="text" name="tenSP">
+									<input th:value="${product.tenSP}" class="input--style-5" type="text" name="tenSP">
 								</div>
 							</div>
 						</div>
@@ -48,7 +57,7 @@
 							<div class="name">Mô tả</div>
 							<div class="value">
 								<div class="input-group">
-									<input class="input--style-5" type="text" name="moTa">
+									<input th:value="${product.moTa}" class="input--style-5" type="text" name="moTa">
 								</div>
 							</div>
 						</div>
@@ -56,24 +65,27 @@
 							<div class="name">Số lượng</div>
 							<div class="value">
 								<div class="input-group">
-									<input class="input--style-5" type="number" name="tonKho" min="1">
+									<input th:value="${product.tonKho}" class="input--style-5" type="number"
+										name="tonKho" min="1">
 								</div>
 							</div>
 						</div>
 						<div class="form-row m-b-55">
-							<div class="name">Phone</div>
+							<div class="name">Giá</div>
 							<div class="value">
 								<div class="row row-refine">
-									<div class="col-3">
+									<div class="col-4" style="margin-left: 15px;">
 										<div class="input-group-desc">
-											<input class="input--style-5" type="text" name="giaCu">
-											<label class="label--desc">Giá sản phẩm</label>
+											<input th:value="${product.giaCu}" class="input--style-5" type="number"
+												name="giaCu">
+											<label class="label--desc">Giá cũ</label>
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-4" style="margin-left: 30px;">
 										<div class="input-group-desc">
-											<input class="input--style-5" type="text" name="giaSP">
-											<label class="label--desc">Giá mới</label>
+											<input th:value="${product.giaSP}" class="input--style-5" type="number"
+												name="giaSP">
+											<label class="label--desc">Giá SP</label>
 										</div>
 									</div>
 								</div>
@@ -85,39 +97,49 @@
 								<div class="input-group">
 									<div class="rs-select2 js-select-simple select--no-search">
 										<select name="loaiHang.maLoai">
-										<!--<option disabled="disabled" selected="selected">Chọn loại hàng</option>-->
-											<option value="1">Nhẫn</option>
-											<option value="2">Vòng tay</option>
-											<option value="3">Đồng hồ</option>
-											<option value="4">Dây chuyền</option>
-											<option value="6">Bông tay</option>
+											<!--<option disabled="disabled" selected="selected">Chọn loại hàng</option>-->
+											<option value="1" th:selected="${product.loaiHang.maLoai == 1}">Nhẫn
+											</option>
+											<option value="2" th:selected="${product.loaiHang.maLoai == 2}">Vòng tay
+											</option>
+											<option value="3" th:selected="${product.loaiHang.maLoai == 3}">Đồng hồ
+											</option>
+											<option value="4" th:selected="${product.loaiHang.maLoai == 4}">Dây chuyền
+											</option>
+											<option value="6" th:selected="${product.loaiHang.maLoai == 6}">Bông tay
+											</option>
 										</select>
 										<div class="select-dropdown"></div>
 									</div>
 								</div>
 							</div>
 						</div>
-						
-						
-							<div class="form-row">
+
+
+						<div class="form-row">
 							<div class="name">Thương hiệu</div>
 							<div class="value">
 								<div class="input-group">
 									<div class="rs-select2 js-select-simple select--no-search">
 										<select name="thuongHieu.maTH">
 											<!--<option disabled="disabled" selected="selected">Chọn thương hiệu</option>-->
-											<option value="1">PNJ</option>
-											<option value="2">Coach</option>
-											<option value="3">Calvin Klein</option>
-											<option value="5">Casio</option>
-											<option value="6">Justcavali</option>
+											<option value="1" th:selected="${product.thuongHieu.maTH == '1'}">PNJ
+											</option>
+											<option value="2" th:selected="${product.thuongHieu.maTH == '2'}">Coach
+											</option>
+											<option value="3" th:selected="${product.thuongHieu.maTH == '3'}">Calvin
+												Klein</option>
+											<option value="5" th:selected="${product.thuongHieu.maTH == '5'}">Casio
+											</option>
+											<option value="6" th:selected="${product.thuongHieu.maTH == '6'}">Justcavali
+											</option>
 										</select>
 										<div class="select-dropdown"></div>
 									</div>
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="form-row">
 							<div class="name">Hình ảnh</div>
 							<div class="value">
@@ -126,7 +148,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<!--<div class="form-row p-t-20">
 							<label class="label label--block">Are you an existing customer?</label>
 							<div class="p-t-15">
@@ -140,9 +162,14 @@
 								</label>
 							</div>
 						</div>-->
-						
+
 						<div>
-							<button class="btn btn--radius-2 btn--red" type="submit">Register</button>
+							<button th:if="${product == null}" th:formaction="@{/admin/product/add/submit}"
+								class="btn btn--radius-2 btn--red" type="submit">Create</button>
+						</div>
+						<div>
+							<button th:if="${product != null}" th:formaction="@{/admin/product/edit/submit}"
+								class="btn btn--radius-2 btn--red" type="submit">Update</button>
 						</div>
 					</form>
 				</div>

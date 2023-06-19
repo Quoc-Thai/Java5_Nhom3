@@ -105,8 +105,8 @@
 											<th class="border-top-0">ID</th>
 											<th class="border-top-0">Tên</th>
 											<th class="border-top-0">Số Lượng</th>
-											<th class="border-top-0">Giá</th>
-											<th class="border-top-0">Giá mới</th>
+											<th class="border-top-0">Giá Cũ</th>
+											<th class="border-top-0">Giá SP</th>
 											<th class="border-top-0">Loại</th>
 											<th class="border-top-0">Thương hiệu</th>
 											<th class="border-top-0">Hình ảnh</th>
@@ -114,18 +114,22 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Deshmukh</td>
-											<td>Prohaska</td>
-											<td>@Genelia</td>
-											<td>admin</td>
-											<td>admin</td>
-											<td>admin</td>
-											<td>admin</td>
+										<tr th:each="sp : ${products}">
+											<td th:text="${sp.maSP}"></td>
+											<td th:text="${sp.tenSP}"></td>
+											<td th:text="${sp.tonKho}"></td>
+											<td th:text="'$'+${sp.giaCu}"></td>
+											<td th:text="${sp.giaSP}"></td>
+											<td th:text="${sp.loaiHang.tenLoai}"></td>
+											<td th:text="${sp.thuongHieu.tenTH}"></td>
+											<td><img th:src="${sp.getHinhAnh}" width="40px"></td>
 											<td>
-												<button class="bi bi-pencil-square" style="margin-right: 30px"></button>
-												<button class="bi bi-trash"></button>
+												<form method="post">
+													<button th:formaction="@{/admin/product/edit/__${sp.maSP}__}"
+														class="bi bi-pencil-square" style="margin-right: 30px"></button>
+													<button th:formaction="@{/admin/product/delete/__${sp.maSP}__}"
+														class="bi bi-trash"></button>
+												</form>
 											</td>
 										</tr>
 									</tbody>
