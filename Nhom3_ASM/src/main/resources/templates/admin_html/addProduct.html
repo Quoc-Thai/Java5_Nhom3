@@ -35,13 +35,12 @@
 					<h2 class="title">Thêm sản phẩm</h2>
 				</div>
 				<div class="card-body">
-					<form method="POST" th:action="@{/admin/product/add/submit}" th:object="${product}">
+					<form method="POST" th:action="@{/admin/product/add/submit}" th:object="${product}" enctype="multipart/form-data">
 						<div class="form-row">
 							<div class="name">Tên</div>
 							<div class="value">
 								<div class="input-group">
-									<input class="input--style-5" type="text" name="tenSp">
-									
+									<input class="input--style-5" type="text" name="tenSP">
 								</div>
 							</div>
 						</div>
@@ -73,7 +72,7 @@
 									</div>
 									<div class="col-3">
 										<div class="input-group-desc">
-											<input class="input--style-5" type="text" name="giaMoi">
+											<input class="input--style-5" type="text" name="giaSP">
 											<label class="label--desc">Giá mới</label>
 										</div>
 									</div>
@@ -85,11 +84,13 @@
 							<div class="value">
 								<div class="input-group">
 									<div class="rs-select2 js-select-simple select--no-search">
-										<select name="loai">
-											<option disabled="disabled" selected="selected">Choose option</option>
-											<option>Subject 1</option>
-											<option>Subject 2</option>
-											<option>Subject 3</option>
+										<select name="loaiHang.maLoai">
+										<!--<option disabled="disabled" selected="selected">Chọn loại hàng</option>-->
+											<option value="1">Nhẫn</option>
+											<option value="2">Vòng tay</option>
+											<option value="3">Đồng hồ</option>
+											<option value="4">Dây chuyền</option>
+											<option value="6">Bông tay</option>
 										</select>
 										<div class="select-dropdown"></div>
 									</div>
@@ -103,11 +104,13 @@
 							<div class="value">
 								<div class="input-group">
 									<div class="rs-select2 js-select-simple select--no-search">
-										<select name="thuongHieu">
-											<option disabled="disabled" selected="selected">Choose option</option>
-											<option>Subject 1</option>
-											<option>Subject 2</option>
-											<option>Subject 3</option>
+										<select name="thuongHieu.maTH">
+											<!--<option disabled="disabled" selected="selected">Chọn thương hiệu</option>-->
+											<option value="1">PNJ</option>
+											<option value="2">Coach</option>
+											<option value="3">Calvin Klein</option>
+											<option value="5">Casio</option>
+											<option value="6">Justcavali</option>
 										</select>
 										<div class="select-dropdown"></div>
 									</div>
@@ -119,12 +122,12 @@
 							<div class="name">Hình ảnh</div>
 							<div class="value">
 								<div class="input-group">
-									<input class="input--style-5" type="file" name="hinhAnh">
+									<input class="input--style-5" type="file" name="image">
 								</div>
 							</div>
 						</div>
 						
-						<div class="form-row p-t-20">
+						<!--<div class="form-row p-t-20">
 							<label class="label label--block">Are you an existing customer?</label>
 							<div class="p-t-15">
 								<label class="radio-container m-r-55">Yes
@@ -136,7 +139,8 @@
 									<span class="checkmark"></span>
 								</label>
 							</div>
-						</div>
+						</div>-->
+						
 						<div>
 							<button class="btn btn--radius-2 btn--red" type="submit">Register</button>
 						</div>

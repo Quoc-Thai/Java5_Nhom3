@@ -46,7 +46,7 @@
 							class="text-decoration-line-through"></span> <span
 							th:text="${'$'+product.giaSP}"></span>
 					</div>
-					<p class="lead" th:text="${product.getMota}"></p>
+					<p class="lead" th:text="${product.moTa}"></p>
 					<div class="d-flex">
 						<form
 							th:action="@{/account/addToCart/{id}(id=${product.getMaSP()})}"
