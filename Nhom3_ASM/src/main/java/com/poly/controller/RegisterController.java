@@ -81,6 +81,7 @@ public class RegisterController {
 		return "register";
 	}
 
+	
 	@PostMapping("/register/info/submit")
 	public String dangki2(Model model, @Valid @ModelAttribute("customer") KhachHang kh, BindingResult result) {
 		TaiKhoan tk = tempAcc;
@@ -134,7 +135,6 @@ public class RegisterController {
 			model.addAttribute("message", "Mã xác nhận không trùng khớp");
 			return "finalRegister";
 		}
-
 	}
 
 	/*

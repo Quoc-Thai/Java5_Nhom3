@@ -84,12 +84,12 @@ public class AdminController {
 	@PostMapping("/admin/product/add/submit")
 	public String addSp(Model model, @ModelAttribute("product") SanPham product,
 			@RequestParam("image") MultipartFile img) throws IllegalStateException, IOException {
-		if(product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
-			|| product.getGiaSP().equals("") || product.getHinhAnh().equals("") || product.getTonKho().equals("")){
+		if (product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
+				|| product.getGiaSP().equals("") || img.getOriginalFilename().isEmpty()
+				|| product.getTonKho().equals("")) {
 			model.addAttribute("message", "Vui lòng điền đủ thông tin!!");
 			return "admin_html/addProduct";
-		}
-		else {
+		} else {
 			String filename = img.getOriginalFilename();
 			LoaiHang lh = loaiHangDAO.findById(product.getLoaiHang().getMaLoai()).get();
 			File file = new ClassPathResource("static/img/product/" + lh.getTenFolder()).getFile();
@@ -99,7 +99,6 @@ public class AdminController {
 			sanPhamDAO.save(product);
 			return "redirect:/index";
 		}
-
 	}
 
 	@PostMapping("admin/product/edit/{id}")
@@ -113,15 +112,16 @@ public class AdminController {
 		sanPhamDAO.save(sp);
 		return "admin_html/addProduct";
 	}
+
 	@PostMapping("admin/product/edit/submit")
 	public String editSubmit(Model model, @ModelAttribute("product") SanPham product,
 			@RequestParam("image") MultipartFile img) throws IllegalStateException, IOException {
 		System.out.println(product.getAvailable());
-		if(product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
-				|| product.getGiaSP().equals("") || product.getTonKho().equals("")){
-				model.addAttribute("message", "Vui lòng điền đủ thông tin!!");
-				return "admin_html/addProduct";
-			}
+		if (product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
+				|| product.getGiaSP().equals("") || product.getTonKho().equals("")) {
+			model.addAttribute("message", "Vui lòng điền đủ thông tin!!");
+			return "admin_html/addProduct";
+		}
 		if (!img.getOriginalFilename().isEmpty()) {
 			String filename = img.getOriginalFilename();
 			LoaiHang lh = loaiHangDAO.findById(product.getLoaiHang().getMaLoai()).get();
@@ -136,7 +136,7 @@ public class AdminController {
 		sanPhamDAO.save(product);
 		return "redirect:/admin/table";
 	}
-
+	
 //	@PostMapping("admin/product/edit/submit")
 //	public String editSubmit(Model model, @ModelAttribute("product") SanPham product,
 //			@RequestParam("image") MultipartFile img) throws IllegalStateException, IOException {
@@ -157,4 +157,5 @@ public class AdminController {
 //		return "redirect:/admin/table";
 //	}
 //	
+	
 }
