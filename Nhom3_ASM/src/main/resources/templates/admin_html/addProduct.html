@@ -34,7 +34,9 @@
 				<div class="card-heading">
 					<h2 class="title">Thêm sản phẩm</h2>
 				</div>
+				
 				<div class="card-body">
+						<p th:text="${message}" style="color: red;"></p>
 					<form method="POST" th:object="${product}" enctype="multipart/form-data">
 						<div class="form-row" th:if="${product.maSP}!=null">
 							<div class="name">Mã SP</div>
@@ -77,14 +79,14 @@
 									<div class="col-4" style="margin-left: 15px;">
 										<div class="input-group-desc">
 											<input th:value="${product.giaCu}" class="input--style-5" type="number"
-												name="giaCu">
+												min="1" name="giaCu">
 											<label class="label--desc">Giá cũ</label>
 										</div>
 									</div>
 									<div class="col-4" style="margin-left: 30px;">
 										<div class="input-group-desc">
 											<input th:value="${product.giaSP}" class="input--style-5" type="number"
-												name="giaSP">
+												min="1" name="giaSP">
 											<label class="label--desc">Giá SP</label>
 										</div>
 									</div>
@@ -183,6 +185,7 @@
 								</label>
 							</div>
 						</div>
+						<p th:text="${message}" style="color: red;"></p>
 
 						<div>
 							<button th:if="${product.maSP == null}" th:formaction="@{/admin/product/add/submit}"
