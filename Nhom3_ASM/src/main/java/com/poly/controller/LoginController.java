@@ -74,24 +74,21 @@ public class LoginController {
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////
-	@GetMapping("/changePassword")
+	@GetMapping("/account/changePassword")
 	public String form() {
 		return "changePassword";
 	}
 
-	@PostMapping("/changePassword/submit")
+	@PostMapping("/account/changePassword/submit")
 	public String DoiMatKhau(Model model, @RequestParam("passOld") String passOld,
 			@RequestParam("passNew") String passNew, @RequestParam("passNew1") String passNew1) {
 		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");
 		TaiKhoan tk = taiKhoanDAO.findById(user.getUsername()).get();
-
 		if (user.getPassword().equals(passOld) && passNew.equals(passNew1)) {
 			taiKhoanDAO.save(tk);
-
 			return "redirect:/index";
 
 		}
-
 		return "changePassword";
 	}
 

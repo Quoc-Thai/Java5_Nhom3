@@ -39,9 +39,11 @@ public class ReceiptController {
 	@GetMapping("/account/receipt/{id}")
 	public String getReceiptList(@PathVariable Integer id, Model model) {
 		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");
+		System.out.println(user.getIsAdmin());
 		List<HoaDon> list = hoaDonDAO.findAll();
 		for (HoaDon hd : list) {
-			if (hd.getTaiKhoan().getUsername().equals(user.getUsername()) && hd.getMaHD() == id) {
+			if (hd.getTaiKhoan().getUsername().equals(user.getUsername()) && hd.getMaHD() == id
+					|| user.getIsAdmin() == true) {
 				model.addAttribute("receipt", hd);
 				return "receipt";
 			}

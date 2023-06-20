@@ -7,9 +7,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +24,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.poly.DAO.HoaDonDAO;
 import com.poly.DAO.LoaiHangDAO;
 import com.poly.DAO.SanPhamDAO;
 import com.poly.DAO.TaiKhoanDAO;
 import com.poly.DAO.ThuongHieuDAO;
+import com.poly.DAO.TrangThaiDAO;
+import com.poly.model.HoaDon;
 import com.poly.model.LoaiHang;
+import com.poly.model.Report;
 import com.poly.model.SanPham;
 import com.poly.model.TaiKhoan;
 import com.poly.model.ThuongHieu;
+import com.poly.model.TrangThai;
 
 import jakarta.servlet.ServletContext;
 
@@ -42,9 +52,22 @@ public class AdminController {
 	ThuongHieuDAO thuongHieuDAO;
 	@Autowired
 	TaiKhoanDAO taiKhoanDAO;
+	@Autowired
+	HoaDonDAO hoaDonDAO;
+	@Autowired
+	TrangThaiDAO trangThaiDAO;
 
 	@GetMapping("/admin")
-	public String admin() {
+	public String admin(Model model, @RequestParam("p") Optional<Integer> p) {
+		model.addAttribute("numTK", taiKhoanDAO.findAll().size());
+		model.addAttribute("numSP", sanPhamDAO.findAll().size());
+		model.addAttribute("numHD", hoaDonDAO.findAll().size());
+		Pageable pageable = PageRequest.of(p.orElse(0), 6);
+		Page<Report> sanPhams = sanPhamDAO.getListSP(pageable);
+		var numberOfPages = sanPhams.getTotalPages();
+		model.addAttribute("currIndex", p.orElse(0));
+		model.addAttribute("numberOfPages", numberOfPages);
+		model.addAttribute("products", sanPhams);
 		return "admin_html/dashboard";
 	}
 
@@ -53,6 +76,22 @@ public class AdminController {
 		List<SanPham> list = sanPhamDAO.findAll();
 		model.addAttribute("products", list);
 		return "admin_html/basic-table";
+	}
+
+	@GetMapping("/admin/bill/table")
+	public String Bill(Model model) {
+		List<HoaDon> hd = hoaDonDAO.findAll(Sort.by(Sort.Direction.ASC, "trangThai.maTrangThai"));
+		model.addAttribute("hoaDon", hd);
+		return "admin_html/bill-table";
+	}
+
+	@GetMapping("/admin/bill/table/{id}/{status}")
+	public String setTrangThai(Model model, @PathVariable Integer id, @PathVariable Integer status) {
+		HoaDon hd = hoaDonDAO.findById(id).get();
+		TrangThai tt = trangThaiDAO.findById(status+1).get();
+		hd.setTrangThai(tt);
+		hoaDonDAO.save(hd);
+		return "redirect:/admin/bill/table";
 	}
 
 	@GetMapping("/admin/blank")
@@ -70,6 +109,22 @@ public class AdminController {
 		List<TaiKhoan> list = taiKhoanDAO.findAll();
 		model.addAttribute("users", list);
 		return "admin_html/profile";
+	}
+
+	@PostMapping("/admin/user/lock/{username}")
+	public String Lock(Model model, @PathVariable("username") String username) {
+		TaiKhoan tk = taiKhoanDAO.findById(username).get();
+		tk.setActivated(false);
+		taiKhoanDAO.save(tk);
+		return "redirect:/admin/user/table";
+	}
+
+	@PostMapping("/admin/user/unlock/{username}")
+	public String Unlock(Model model, @PathVariable("username") String username) {
+		TaiKhoan tk = taiKhoanDAO.findById(username).get();
+		tk.setActivated(true);
+		taiKhoanDAO.save(tk);
+		return "redirect:/admin/user/table";
 	}
 
 	@GetMapping("/admin/product/add")
