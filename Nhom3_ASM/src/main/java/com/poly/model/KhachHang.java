@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class KhachHang {
 	@Column(name = "ngay_sinh")
 	String ngaySinh;
 	@NotBlank(message = "Số điện thoại không được bỏ trống")
+	@Pattern(regexp = "(84|0[3|5|7|8|9])+([0-9]{8})",message = "Số điện thoại sai định dạng")
 	@Column(name = "dien_thoai")
 	String dienThoai;
 	@NotBlank(message = "Địa chỉ không được bỏ trống")

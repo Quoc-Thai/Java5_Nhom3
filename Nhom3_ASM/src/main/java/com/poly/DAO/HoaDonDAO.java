@@ -11,6 +11,6 @@ public interface HoaDonDAO extends JpaRepository<HoaDon, Integer> {
 	@Query("SELECT p FROM HoaDon p WHERE p.taiKhoan.username LIKE ?1 ORDER BY p.maHD DESC LIMIT 1")
 	HoaDon getRecentReceipt(String username);
 	
-	@Query("SELECT p FROM HoaDon p WHERE p.taiKhoan.username LIKE ?1")
+	@Query("SELECT p FROM HoaDon p WHERE p.taiKhoan.username LIKE ?1 ORDER BY p.maHD DESC")
 	List<HoaDon> getList(String username);
 }

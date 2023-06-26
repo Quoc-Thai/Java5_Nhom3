@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments :: header}"></head>
 <link href="/css/receiptList.css" rel="stylesheet">
+
 <body>
 	<!-- Navbar Start -->
 	<div th:replace="~{fragments :: navbar}"></div>
@@ -14,8 +16,7 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-body p-0">
-									<div class="table-responsive table-scroll"
-										data-mdb-perfect-scrollbar="true"
+									<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true"
 										style="position: relative; max-height: 500px">
 										<form action="">
 											<table class="table table-striped mb-0">
@@ -24,20 +25,38 @@
 														<th scope="col">Mã hóa đơn</th>
 														<th scope="col">Tổng sản phẩm</th>
 														<th scope="col">Tổng Tiền</th>
-														<th scope="col">Ngày tạo</th>
-														<th></th>
+														<th scope="col">Thời gian đặt</th>
+														<th scope="col">Tình trạng</th>
+														<th scope="col">Hóa đơn</th>
+														<th scope="col">Đặt lại</th>
+														<th scope="col">Hủy đơn</th>
 													</tr>
 												</thead>
 												<tbody>
 													<tr th:each="receipt : ${receiptList}">
 														<td th:text="${receipt.maHD}"></td>
 														<td th:text="${receipt.tongSP}"></td>
-														<td th:text="${receipt.tongTien}"></td>
+														<td th:text="${'$'+receipt.tongTien}"></td>
 														<td th:text="${receipt.ngayTao}"></td>
+														<td th:text="${receipt.trangThai.tenTrangThai}"></td>
 														<td>
 															<button class="bi bi-pencil-square"
 																th:formaction="@{/account/receipt/{id}(id=${receipt.maHD})}"
-																style="margin-right: 30px"></button>
+																style="margin-left: 30px"></button>
+														</td>
+														<td>
+															<button
+																th:if="${receipt.trangThai.maTrangThai == 5 or receipt.trangThai.maTrangThai == 4}"
+																class="bi bi-arrow-clockwise"
+																th:formaction="@{/account/recart/{id}(id=${receipt.maHD})}"
+																style="margin-left: 30px"></button>
+
+														</td>
+														<td>
+															<button th:if="${receipt.trangThai.maTrangThai} == 1"
+																class="bi bi-x-circle"
+																th:formaction="@{/account/receipt/cancel/{id}(id=${receipt.maHD})}"
+																style="margin-left: 30px"></button>
 														</td>
 													</tr>
 												</tbody>
@@ -53,4 +72,5 @@
 		</div>
 	</section>
 </body>
+
 </html>

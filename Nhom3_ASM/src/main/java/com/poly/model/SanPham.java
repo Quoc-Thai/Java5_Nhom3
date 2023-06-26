@@ -34,11 +34,11 @@ public class SanPham {
 	@Column(name = "ton_kho")
 	Integer tonKho;
 	@Column(name = "mo_ta")
-	String mota;
+	String moTa;
 	@Column(name = "hinh_anh")
-	String hinhAnh;
+	String hinhAnh = null;
 	@Column(name = "available")
-	Boolean available;
+	Boolean available = true;
 
 	@OneToMany(mappedBy = "sanPham")
 	List<GioHangChiTiet> gioHangChiTiet;

@@ -25,6 +25,8 @@ public class LoaiHang {
 	Integer maLoai;
 	@Column(name = "ten_loai")
 	String tenLoai;
+	@Column(name = "folder_name")
+	String tenFolder;
 	
 	@OneToMany(mappedBy = "loaiHang")
 	List<SanPham> sanPham;

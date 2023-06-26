@@ -46,17 +46,19 @@
 							class="text-decoration-line-through"></span> <span
 							th:text="${'$'+product.giaSP}"></span>
 					</div>
-					<p class="lead" th:text="${product.getMota}"></p>
+					<p class="lead" th:text="${product.moTa}"></p>
 					<div class="d-flex">
 						<form
 							th:action="@{/account/addToCart/{id}(id=${product.getMaSP()})}"
 							method="post">
-							<input class="form-control text-center me-3" id="inputQuantity"
+							<input th:if="${product.tonKho} > 0" class="form-control text-center me-3" id="inputQuantity"
 								name="quantity" type="number" value="1" min="1"
-								style="max-width: 4rem" /><br>
-							<button class="btn btn-outline-dark flex-shrink-0">
+								th:max="${product.tonKho}" style="max-width: 4rem" /><br>
+							<button th:if="${product.tonKho} > 0" class="btn btn-outline-dark flex-shrink-0">
 								<i class="bi-cart-fill me-1"></i> Add to cart
 							</button>
+							<h3 class="red" th:if="${product.tonKho} == 0">Rất tiếc sản phẩm đã hết
+								hàng xin quý khách vui lòng chọn sản phẩm khác</h3>
 						</form>
 					</div>
 				</div>
