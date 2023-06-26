@@ -1,6 +1,6 @@
 package com.poly.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,13 +32,16 @@ public class HoaDon {
 	Integer tongSP;
 	@Column(name = "tong_tien")
 	Double tongTien;
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ngay_tao")
-	Date ngayTao;
-
+	Timestamp ngayTao;
 	@OneToMany(mappedBy = "hoaDon")
 	List<HoaDonChiTiet> hoaDonChiTiet;
 	@ManyToOne
 	@JoinColumn(name = "username")
 	TaiKhoan taiKhoan;
-	
+	@ManyToOne
+	@JoinColumn(name = "ma_trang_thai")
+	TrangThai trangThai;
+
 }

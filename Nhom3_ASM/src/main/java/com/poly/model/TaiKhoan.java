@@ -24,16 +24,18 @@ public class TaiKhoan {
 	@Column(name = "username")
 	@NotBlank(message = "Username không được bỏ trống")
 	String username;
-	
+
 	@NotBlank(message = "Mật khẩu không được bỏ trống")
 	@Column(name = "password")
 	String password;
 	@Column(name = "is_admin")
-	Boolean isAdmin= false;
+	Boolean isAdmin = false;
+	@Column(name = "activated")
+	Boolean activated = true;
 
 	@OneToMany(mappedBy = "taiKhoan")
 	List<HoaDon> hoaDon;
-	
+
 	@OneToOne
 	@JoinColumn(name = "ma_kh")
 	KhachHang khachHang;

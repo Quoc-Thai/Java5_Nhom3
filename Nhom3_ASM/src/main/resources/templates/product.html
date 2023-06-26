@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments :: header}"></head>
+<link href="/css/pagination.css" rel="stylesheet">
 <body>
 
 	<!-- Navbar Start -->
@@ -12,7 +13,7 @@
 	<div class="container-fluid page-header mb-5 wow fadeIn"
 		data-wow-delay="0.1s">
 		<div class="container">
-			<h1 th:text="${products.get(0).loaiHang.tenLoai}"
+			<h1 th:text="${currentCategory.tenLoai}"
 				class="display-3 mb-3 animated slideInDown"></h1>
 			<nav aria-label="breadcrumb animated slideInDown">
 				<ol class="breadcrumb mb-0">
@@ -20,7 +21,7 @@
 						th:href="@{/index}">Home</a></li>
 					<li class="breadcrumb-item"><a class="text-body"
 						th:href="@{/category}">Categories</a></li>
-					<li th:text="${products.get(0).loaiHang.tenLoai}"
+					<li th:text="${products.content.get(0).loaiHang.tenLoai}"
 						class="breadcrumb-item text-dark active" aria-current="page"></li>
 				</ol>
 			</nav>
@@ -33,7 +34,7 @@
 			<div class="tab-content">
 				<div class="row g-0 gx-5 align-items-end">
 					<div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-						data-wow-delay="0.1s" th:each="product : ${products}">
+						data-wow-delay="0.1s" th:each="product : ${products.content}">
 						<div class="product-item">
 							<div class="position-relative bg-light overflow-hidden">
 								<img class="img-fluid w-100" th:src="${product.getHinhAnh()}"
@@ -42,26 +43,16 @@
 									class="bg-secondary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Sale</div>
 							</div>
 							<div class="text-center p-4">
-								<a class="d-block h5 mb-2"
+								<a class="d-block h5 mb-2 text-decoration-none"
 									th:href="@{/product/{id}(id=${product.getMaSP()})}"
 									th:text="${product.getTenSP()}"></a> <span
 									th:if="${product.giaSP < product.giaCu}"
-									th:text="${product.giaSP}" class="text-primary me-1"></span> <span
+									th:text="'$'+${product.giaSP}" class="text-primary me-1"></span> <span
 									th:if="${product.giaSP < product.giaCu}"
-									th:text="${product.giaCu}"
+									th:text="'$'+${product.giaCu}"
 									class="text-body text-decoration-line-through"></span> <span
 									th:if="${product.giaSP > product.giaCu}"
-									th:text="${product.giaSP}" class="text-primary me-1"></span>
-							</div>
-							<div class="d-flex border-top">
-								<small class="w-50 text-center border-end py-2"> <a
-									class="text-body" href=""><i
-										class="fa fa-eye text-primary me-2"></i>Xem Chi Tiết</a>
-								</small> <small class="w-50 text-center py-2"> <a
-									class="text-body" href=""><i
-										class="fa fa-shopping-bag text-primary me-2"></i>Thêm Vào Giỏ
-										Hàng</a>
-								</small>
+									th:text="'$'+${product.giaSP}" class="text-primary me-1"></span>
 							</div>
 						</div>
 					</div>
@@ -69,6 +60,40 @@
 			</div>
 		</div>
 	</div>
+	<!-- <nav>
+		<ul class="pagination">
+			<li class="page-item" th:if="${currIndex}>0"><a
+				class="page-link"
+				th:href="@{/category/page?id=__${currentCategory.maLoai}__&p=__${currIndex-1}__}"
+				href="#">Previous</a></li>
+			<tr th:each="i: ${#numbers.sequence(0, numberOfPages - 1)}">
+				<li class="page-item"><a
+					th:style="${'background-color:' + (i==currIndex?'lightgrey':'white')}"
+					th:href="@{/category/page?id=__${currentCategory.maLoai}__&p=__${i}__}"
+					class="page-link" href="#" th:text="${i+1}"></a></li>
+			</tr>
+			<li class="page-item"
+				th:if="(${currIndex}>-1 and (${currIndex})<${numberOfPages-1})"><a
+				class="page-link"
+				th:href="@{/category/page?id=__${currentCategory.maLoai}__&p=__${currIndex+1}__}"
+				href="#">Next</a></li>
+		</ul>
+	</nav> -->
+	<nav class="pagination-container">
+		<div class="pagination">
+			<a class="pagination-newer" th:if="${currIndex}>0"
+				th:href="@{/category/page?id=__${currentCategory.maLoai}__&p=__${currIndex-1}__}">Previous</a>
+			<span class="pagination-inner">
+				<tr th:each="i: ${#numbers.sequence(0, numberOfPages - 1)}">
+					<a
+						th:href="@{/category/page?id=__${currentCategory.maLoai}__&p=__${i}__}"
+						th:text="${i+1}"
+						th:classappend="${i==currIndex} ? 'pagination-active' : ''"> </a>
+				</tr>
+			</span> <a class="pagination-older" th:if="(${currIndex}>-1 and (${currIndex})<${numberOfPages-1})"
+				th:href="@{/category/page?id=__${currentCategory.maLoai}__&p=__${currIndex+1}__}">Next</a>
+		</div>
+	</nav>
 
 	<!-- Footer Start -->
 	<div th:replace="~{fragments :: footer}"></div>

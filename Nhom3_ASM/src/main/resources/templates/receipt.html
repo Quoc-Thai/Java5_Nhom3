@@ -14,7 +14,6 @@
 						<h3 class="widget-title grey lighter">
 							<i class="ace-icon fa fa-leaf green"></i> TTC receipt
 						</h3>
-
 						<div class="widget-toolbar no-border invoice-info">
 							<span class="invoice-info-label">Invoice:</span> <span
 								th:text="${receipt.maHD}" class="red"></span> <br> <span
@@ -23,13 +22,14 @@
 						</div>
 
 						<div class="widget-toolbar hidden-480">
-							<a href="#"> <i class="ace-icon fa fa-print"></i>
+							<a href="#"><i class="ace-icon fa fa-print"></i>
 							</a>
 						</div>
 					</div>
 
 					<div class="widget-body">
 						<div class="widget-main padding-24">
+							<h5>Tình trạng đơn hàng: <b th:text="${receipt.trangThai.tenTrangThai}"></b></h5>
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="row">
