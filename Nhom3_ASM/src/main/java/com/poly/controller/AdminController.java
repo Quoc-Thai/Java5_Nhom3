@@ -31,6 +31,7 @@ import com.poly.DAO.TaiKhoanDAO;
 import com.poly.DAO.ThuongHieuDAO;
 import com.poly.DAO.TrangThaiDAO;
 import com.poly.model.HoaDon;
+import com.poly.model.HoaDonChiTiet;
 import com.poly.model.LoaiHang;
 import com.poly.model.Report;
 import com.poly.model.SanPham;
@@ -62,7 +63,7 @@ public class AdminController {
 		model.addAttribute("numTK", taiKhoanDAO.findAll().size());
 		model.addAttribute("numSP", sanPhamDAO.findAll().size());
 		model.addAttribute("numHD", hoaDonDAO.findAll().size());
-		Pageable pageable = PageRequest.of(p.orElse(0), 6);
+		Pageable pageable = PageRequest.of(p.orElse(0), 5);
 		Page<Report> sanPhams = sanPhamDAO.getListSP(pageable);
 		var numberOfPages = sanPhams.getTotalPages();
 		model.addAttribute("currIndex", p.orElse(0));
@@ -85,10 +86,24 @@ public class AdminController {
 		return "admin_html/bill-table";
 	}
 
+	@GetMapping("/admin/bill/{id}")
+	public String billDetail(Model model, @PathVariable Integer id) {
+		HoaDon hd = hoaDonDAO.findById(id).get();
+		model.addAttribute("receipt", hd);
+		return "receipt";
+	}
+
 	@GetMapping("/admin/bill/table/{id}/{status}")
 	public String setTrangThai(Model model, @PathVariable Integer id, @PathVariable Integer status) {
 		HoaDon hd = hoaDonDAO.findById(id).get();
-		TrangThai tt = trangThaiDAO.findById(status+1).get();
+		TrangThai tt = trangThaiDAO.findById(status + 1).get();
+		if (status + 1 == 5) {
+			for (HoaDonChiTiet hdct : hd.getHoaDonChiTiet()) {
+				SanPham sanPham = sanPhamDAO.findById(hdct.getSanPham().getMaSP()).get();
+				sanPham.setTonKho(sanPham.getTonKho() + hdct.getSoLuong());
+				sanPhamDAO.save(sanPham);
+			}
+		}
 		hd.setTrangThai(tt);
 		hoaDonDAO.save(hd);
 		return "redirect:/admin/bill/table";
@@ -106,7 +121,7 @@ public class AdminController {
 
 	@GetMapping("/admin/user/table")
 	public String Profile(Model model) {
-		List<TaiKhoan> list = taiKhoanDAO.findAll();
+		List<TaiKhoan> list = taiKhoanDAO.getAllUserExceptAdmin();
 		model.addAttribute("users", list);
 		return "admin_html/profile";
 	}
@@ -139,12 +154,11 @@ public class AdminController {
 	@PostMapping("/admin/product/add/submit")
 	public String addSp(Model model, @ModelAttribute("product") SanPham product,
 			@RequestParam("image") MultipartFile img) throws IllegalStateException, IOException {
-		if(product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
-			|| product.getGiaSP().equals("") || product.getHinhAnh().equals("") || product.getTonKho().equals("")){
+		if (product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
+				|| product.getGiaSP().equals("") || product.getTonKho().equals("")) {
 			model.addAttribute("message", "Vui lòng điền đủ thông tin!!");
 			return "admin_html/addProduct";
-		}
-		else {
+		} else {
 			String filename = img.getOriginalFilename();
 			LoaiHang lh = loaiHangDAO.findById(product.getLoaiHang().getMaLoai()).get();
 			File file = new ClassPathResource("static/img/product/" + lh.getTenFolder()).getFile();
@@ -168,15 +182,16 @@ public class AdminController {
 		sanPhamDAO.save(sp);
 		return "admin_html/addProduct";
 	}
+
 	@PostMapping("admin/product/edit/submit")
 	public String editSubmit(Model model, @ModelAttribute("product") SanPham product,
 			@RequestParam("image") MultipartFile img) throws IllegalStateException, IOException {
 		System.out.println(product.getAvailable());
-		if(product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
-				|| product.getGiaSP().equals("") || product.getTonKho().equals("")){
-				model.addAttribute("message", "Vui lòng điền đủ thông tin!!");
-				return "admin_html/addProduct";
-			}
+		if (product.getTenSP().equals("") || product.getMoTa().equals("") || product.getGiaCu().equals("")
+				|| product.getGiaSP().equals("") || product.getTonKho().equals("")) {
+			model.addAttribute("message", "Vui lòng điền đủ thông tin!!");
+			return "admin_html/addProduct";
+		}
 		if (!img.getOriginalFilename().isEmpty()) {
 			String filename = img.getOriginalFilename();
 			LoaiHang lh = loaiHangDAO.findById(product.getLoaiHang().getMaLoai()).get();

@@ -64,7 +64,7 @@
 			<!-- Bread crumb and right sidebar toggle -->
 			<!-- ============================================================== -->
 			<div class="page-breadcrumb bg-white">
-				
+
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- ============================================================== -->
@@ -89,6 +89,7 @@
 									<thead>
 										<tr>
 											<th class="border-top-0">Mã hóa đơn</th>
+											<th class="border-top-0">Username</th>
 											<th class="border-top-0">Tổng sản phẩm</th>
 											<th class="border-top-0">Tổng Tiền</th>
 											<th class="border-top-0">Thời gian đặt</th>
@@ -100,6 +101,7 @@
 										<form action="" method="get">
 											<tr th:each="bill : ${hoaDon}">
 												<td th:text="${bill.maHD}"></td>
+												<td th:text="${bill.taiKhoan.username}"></td>
 												<td th:text="${bill.tongSP}"></td>
 												<td th:text="${'$'+bill.tongTien}"></td>
 												<td th:text="${bill.ngayTao}"></td>

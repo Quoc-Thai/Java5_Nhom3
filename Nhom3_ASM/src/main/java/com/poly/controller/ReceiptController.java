@@ -15,7 +15,10 @@ import com.poly.DAO.HoaDonDAO;
 import com.poly.DAO.SanPhamDAO;
 import com.poly.DAO.TrangThaiDAO;
 import com.poly.model.HoaDon;
+import com.poly.model.HoaDonChiTiet;
+import com.poly.model.SanPham;
 import com.poly.model.TaiKhoan;
+import com.poly.model.TrangThai;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -39,11 +42,9 @@ public class ReceiptController {
 	@GetMapping("/account/receipt/{id}")
 	public String getReceiptList(@PathVariable Integer id, Model model) {
 		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");
-		System.out.println(user.getIsAdmin());
 		List<HoaDon> list = hoaDonDAO.findAll();
 		for (HoaDon hd : list) {
-			if (hd.getTaiKhoan().getUsername().equals(user.getUsername()) && hd.getMaHD() == id
-					|| user.getIsAdmin() == true) {
+			if (hd.getTaiKhoan().getUsername().equals(user.getUsername()) && hd.getMaHD() == id) {
 				model.addAttribute("receipt", hd);
 				return "receipt";
 			}
@@ -59,4 +60,23 @@ public class ReceiptController {
 		return "receiptList";
 	}
 
+	@GetMapping("/account/receipt/cancel/{id}")
+	public String cancelCart(@PathVariable Integer id, Model model) {
+		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");
+		List<HoaDon> list = hoaDonDAO.findAll();
+		for (HoaDon hd : list) {
+			if (hd.getTaiKhoan().getUsername().equals(user.getUsername()) && hd.getMaHD() == id) {
+				for (HoaDonChiTiet hdct : hd.getHoaDonChiTiet()) {
+					SanPham sanPham = sanPhamDAO.findById(hdct.getSanPham().getMaSP()).get();
+					sanPham.setTonKho(sanPham.getTonKho() + hdct.getSoLuong());
+					sanPhamDAO.save(sanPham);
+				}
+				TrangThai tt = trangThaiDAO.findById(5).get();
+				hd.setTrangThai(tt);
+				hoaDonDAO.save(hd);
+				return "redirect:/account/receipt";
+			}
+		}
+		return "redirect:/404";
+	}
 }

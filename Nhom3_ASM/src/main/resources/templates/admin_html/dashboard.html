@@ -153,33 +153,34 @@
 								</table>
 
 							</div>
-
+							<nav class="pagination-container" style="background-color: black;">
+								<div class="pagination">
+									<a class="pagination-newer text-light" th:href="@{/admin?p=__${currIndex-1}__}"
+										th:if="${currIndex}>0">Previous</a>
+									<span class="pagination-inner">
+										<tr th:each="i: ${#numbers.sequence(0, numberOfPages - 1)}">
+											<a th:text="${i+1}" th:href="@{/admin?p=__${i}__}"
+												th:classappend="${i==currIndex} ? 'text-light' : ''"></a>
+										</tr>
+									</span> <a class="pagination-older text-light" th:href="@{/admin?p=__${currIndex+1}__}"
+										th:if="(${currIndex}>-1 and (${currIndex})<${numberOfPages-1})">Next</a>
+								</div>
+							</nav>
 						</div>
 					</div>
 				</div>
-				<nav class="pagination-container">
-					<div class="pagination">
-						<a class="pagination-newer" th:if="${currIndex}>0">Previous</a>
-						<span class="pagination-inner">
-							<tr th:each="i: ${#numbers.sequence(0, numberOfPages - 1)}">
-								<a th:text="${i+1}" th:classappend="${i==currIndex} ? 'pagination-active' : ''"> </a>
-							</tr>
-						</span> <a class="pagination-older"
-							th:if="(${currIndex}>-1 and (${currIndex})<${numberOfPages-1})">Next</a>
-					</div>
-				</nav>
 				<!-- ============================================================== -->
 				<!-- Recent Comments -->
 				<!-- ============================================================== -->
-				<div class="row">
-					<!-- .col -->
+				<!--<div class="row">
+					 .col 
 					<div class="col-md-12 col-lg-8 col-sm-12">
 						<div class="card white-box p-0">
 							<div class="card-body">
 								<h3 class="box-title mb-0">Recent Comments</h3>
 							</div>
 							<div class="comment-widgets">
-								<!-- Comment Row -->
+								 Comment Row 
 								<div class="d-flex flex-row comment-row p-3 mt-0">
 									<div class="p-2"><img src="plugins/images/users/varun.jpg" alt="user" width="50"
 											class="rounded-circle"></div>
@@ -194,7 +195,7 @@
 										</div>
 									</div>
 								</div>
-								<!-- Comment Row -->
+								 Comment Row 
 								<div class="d-flex flex-row comment-row p-3">
 									<div class="p-2"><img src="plugins/images/users/genu.jpg" alt="user" width="50"
 											class="rounded-circle"></div>
@@ -210,7 +211,7 @@
 										</div>
 									</div>
 								</div>
-								<!-- Comment Row -->
+								 Comment Row 
 								<div class="d-flex flex-row comment-row p-3">
 									<div class="p-2"><img src="plugins/images/users/ritesh.jpg" alt="user" width="50"
 											class="rounded-circle"></div>
@@ -343,9 +344,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- /.col -->
+					 /.col 
 				</div>
-			</div>
+			</div>-->
 			<!-- ============================================================== -->
 			<!-- End Container fluid  -->
 			<!-- ============================================================== -->

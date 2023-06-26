@@ -131,26 +131,6 @@ public class CartController {
 		return "redirect:/404";
 	}
 
-	@GetMapping("/account/cancel/{id}")
-	public String cancelCart(@PathVariable Integer id, Model model) {
-		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");
-		List<HoaDon> list = hoaDonDAO.findAll();
-		for (HoaDon hd : list) {
-			if (hd.getTaiKhoan().getUsername().equals(user.getUsername()) && hd.getMaHD() == id) {
-				for (HoaDonChiTiet hdct : hd.getHoaDonChiTiet()) {
-					SanPham sanPham = sanPhamDAO.findById(hdct.getSanPham().getMaSP()).get();
-					sanPham.setTonKho(sanPham.getTonKho() + hdct.getSoLuong());
-					sanPhamDAO.save(sanPham);
-				}
-				TrangThai tt = trangThaiDAO.findById(5).get();
-				hd.setTrangThai(tt);
-				hoaDonDAO.save(hd);
-				return "redirect:/account/receipt";
-			}
-		}
-		return "redirect:/404";
-	}
-
 	@GetMapping("/account/cart/payment")
 	public String receipt() {
 		TaiKhoan user = (TaiKhoan) session.getAttribute("currentUser");

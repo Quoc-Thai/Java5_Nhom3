@@ -21,7 +21,8 @@ public interface SanPhamDAO extends JpaRepository<SanPham, Integer> {
 	List<SanPham> getRelatedSanPham(Integer maLoai);
 
 	@Query("SELECT new Report(p.sanPham.maSP, p.sanPham.tenSP, p.sanPham.available, SUM(p.soLuong), SUM(p.tongTien)) "
-			+ " FROM HoaDonChiTiet p " + " GROUP BY p.sanPham.maSP, p.sanPham.tenSP, p.sanPham.available"
+			+ " FROM HoaDonChiTiet p " + "WHERE p.hoaDon.trangThai.maTrangThai = 4"
+			+ " GROUP BY p.sanPham.maSP, p.sanPham.tenSP, p.sanPham.available,p.hoaDon.trangThai.maTrangThai"
 			+ " ORDER BY SUM(p.soLuong) DESC")
 	Page<Report> getListSP(Pageable pageable);
 }
